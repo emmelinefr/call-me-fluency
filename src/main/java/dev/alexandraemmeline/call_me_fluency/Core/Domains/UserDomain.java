@@ -6,7 +6,7 @@ import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.DomainException;
 
 import java.time.LocalDateTime;
 
-public class User {
+public class UserDomain {
 
     private Long id;
     private String name;
@@ -17,7 +17,7 @@ public class User {
     private Status status;
 
 
-    public User(Long id, String name, String email, String passwordHash, LocalDateTime createdAt, Level level) {
+    public UserDomain(Long id, String name, String email, String passwordHash, LocalDateTime createdAt, Level level) {
 
         validateName(name);
         validateEmail(email);
