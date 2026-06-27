@@ -1,4 +1,4 @@
-package dev.alexandraemmeline.call_me_fluency.Infrastructure.Beans;
+package dev.alexandraemmeline.call_me_fluency.Infrastructure.Config;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Gateway.UserRepositoryGateway;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.CreateUserUseCase;
