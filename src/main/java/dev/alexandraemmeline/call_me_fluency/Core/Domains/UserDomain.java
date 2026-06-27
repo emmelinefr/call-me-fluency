@@ -99,7 +99,7 @@ public class UserDomain {
 
     }
 
-    public void changePassword(String newPasswordHash) {
+    public void changePasswordHash(String newPasswordHash) {
         validatePassword(newPasswordHash);
         this.passwordHash = newPasswordHash;
 
