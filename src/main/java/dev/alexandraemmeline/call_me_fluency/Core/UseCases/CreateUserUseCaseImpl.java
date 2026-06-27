@@ -25,6 +25,9 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
         String passworHash = passwordEncoder.encode(userDomain.getPasswordHash());
         userDomain.changePasswordHash(passworHash);
 
+        userDomain.markAsCreated();
+        userDomain.statusActivate();
+
         return userRepositoryGateway.createUser(userDomain);
     }
 

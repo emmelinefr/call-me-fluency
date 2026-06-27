@@ -17,7 +17,7 @@ public class UserDomain {
     private Status status;
 
 
-    public UserDomain(Long id, String name, String email, String passwordHash, LocalDateTime createdAt, Level level) {
+    public UserDomain(Long id, String name, String email, String passwordHash, LocalDateTime createdAt, Level level, Status status) {
 
         validateName(name);
         validateEmail(email);
@@ -29,7 +29,7 @@ public class UserDomain {
         this.passwordHash = passwordHash;
         this.createdAt = createdAt;
         this.level = level;
-        statusActivate();
+        this.status = status;
     }
 
 
@@ -111,6 +111,15 @@ public class UserDomain {
 
     public void statusDisabled() {
         this.status = Status.INACTIVE;
+    }
+
+    public void markAsCreated() {
+
+        if (this.createdAt != null) {
+            return;
+        }
+
+        this.createdAt = LocalDateTime.now();
     }
 
     public void promoteTo(Level level) {
