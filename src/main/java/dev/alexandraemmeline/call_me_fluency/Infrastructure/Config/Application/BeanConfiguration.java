@@ -17,6 +17,7 @@ public class BeanConfiguration {
         return new CreateUserUseCaseImpl(userRepositoryGateway,passwordEncoder);
     }
 
+    @Bean
     public DeleteUserUseCase deleteUserUseCase(UserRepositoryGateway userRepositoryGateway, PasswordEncoder passwordEncoder) {
         return new DeleteUserUseCaseImpl(userRepositoryGateway, passwordEncoder);
     }

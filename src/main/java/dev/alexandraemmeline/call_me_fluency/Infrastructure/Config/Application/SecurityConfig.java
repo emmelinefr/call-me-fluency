@@ -18,8 +18,16 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/v1/users").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/v1/users"
+                        ).permitAll()
+                        .requestMatchers(
+                                HttpMethod.DELETE,
+                                "/v1/users"
+                        ).permitAll()
+                        .anyRequest()
+                        .authenticated()
                 )
                 .build();
     }
