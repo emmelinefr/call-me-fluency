@@ -2,17 +2,16 @@ package dev.alexandraemmeline.call_me_fluency.Infrastructure.Controllers;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.CreateUserUseCase;
+import dev.alexandraemmeline.call_me_fluency.Core.UseCases.DeleteUserUseCase;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.CreateUserRequest;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.DeleteUserRequest;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.UserResponse;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Handler.SuccessResponse;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Mappers.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 
@@ -23,6 +22,7 @@ public class UserController {
 
     private final UserMapper userMapper;
     private final CreateUserUseCase createUserUseCase;
+    private final DeleteUserUseCase deleteUserUseCase;
 
     @PostMapping
     public ResponseEntity<SuccessResponse<UserResponse>> create(@RequestBody CreateUserRequest createUserRequest) {
@@ -42,6 +42,14 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(response);
 
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> delete(@RequestBody DeleteUserRequest deleteUserRequest) {
+        deleteUserUseCase.execute(deleteUserRequest.email(), deleteUserRequest.password());
+
+        return ResponseEntity.noContent()
+                .build();
     }
 
 

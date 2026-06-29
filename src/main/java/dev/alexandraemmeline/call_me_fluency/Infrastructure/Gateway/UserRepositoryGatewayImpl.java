@@ -8,6 +8,8 @@ import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.UserRepo
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 @RequiredArgsConstructor
 public class UserRepositoryGatewayImpl implements UserRepositoryGateway {
@@ -27,4 +29,19 @@ public class UserRepositoryGatewayImpl implements UserRepositoryGateway {
 
         return userMapper.toDomain(savedEntity);
     }
+
+    @Override
+    public Optional<UserDomain> findByEmail(String email) {
+
+        return userRepository.findByEmail(email)
+                .map(userMapper::toDomain);
+
+    }
+
+    @Override
+    public void deleteByEmail(String email) {
+        userRepository.deleteByEmail(email);
+    }
+
+
 }
