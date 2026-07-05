@@ -1,10 +1,7 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Config.Application;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Gateway.UserRepositoryGateway;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.CreateUserUseCase;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.CreateUserUseCaseImpl;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.DeleteUserUseCase;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.DeleteUserUseCaseImpl;
+import dev.alexandraemmeline.call_me_fluency.Core.UseCases.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +17,11 @@ public class BeanConfiguration {
     @Bean
     public DeleteUserUseCase deleteUserUseCase(UserRepositoryGateway userRepositoryGateway, PasswordEncoder passwordEncoder) {
         return new DeleteUserUseCaseImpl(userRepositoryGateway, passwordEncoder);
+    }
+
+    @Bean
+    public ListUsersUseCase listUsersUseCase(UserRepositoryGateway userRepositoryGateway) {
+        return new ListUsersUseCaseImpl(userRepositoryGateway);
     }
 
 }

@@ -3,6 +3,7 @@ package dev.alexandraemmeline.call_me_fluency.Infrastructure.Controllers;
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.CreateUserUseCase;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.DeleteUserUseCase;
+import dev.alexandraemmeline.call_me_fluency.Core.UseCases.ListUsersUseCase;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.CreateUserRequest;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.DeleteUserRequest;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.UserResponse;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("v1/users")
@@ -23,6 +25,7 @@ public class UserController {
     private final UserMapper userMapper;
     private final CreateUserUseCase createUserUseCase;
     private final DeleteUserUseCase deleteUserUseCase;
+    private final ListUsersUseCase listUsersUseCase;
 
     @PostMapping
     public ResponseEntity<SuccessResponse<UserResponse>> create(@RequestBody CreateUserRequest createUserRequest) {
@@ -50,6 +53,26 @@ public class UserController {
 
         return ResponseEntity.noContent()
                 .build();
+
+    }
+
+
+    @GetMapping
+    public ResponseEntity<SuccessResponse<List<UserResponse>>> listAll() {
+        List<UserResponse> listOfUsers = listUsersUseCase.execute()
+                .stream()
+                .map(userMapper::toResponse)
+                .toList();
+
+        SuccessResponse<List<UserResponse>> response = new SuccessResponse<>(
+                true,
+                "Users listed successfully.",
+                listOfUsers,
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.ok(response);
+
     }
 
 

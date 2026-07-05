@@ -8,6 +8,7 @@ import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.UserRepo
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -44,4 +45,13 @@ public class UserRepositoryGatewayImpl implements UserRepositoryGateway {
     }
 
 
+    @Override
+    public List<UserDomain> listUsers() {
+
+        return userRepository.findAll()
+                .stream()
+                .map(userMapper::toDomain)
+                .toList();
+
+    }
 }
