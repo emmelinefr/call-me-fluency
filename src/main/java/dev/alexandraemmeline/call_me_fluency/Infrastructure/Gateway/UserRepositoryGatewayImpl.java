@@ -5,6 +5,7 @@ import dev.alexandraemmeline.call_me_fluency.Core.Gateway.UserRepositoryGateway;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Mappers.UserMapper;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.UserEntity;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +25,7 @@ public class UserRepositoryGatewayImpl implements UserRepositoryGateway {
     }
 
     @Override
+    @Transactional
     public UserDomain createUser(UserDomain userDomain) {
         UserEntity userEntity = userMapper.toEntity(userDomain);
         UserEntity savedEntity = userRepository.save(userEntity);
@@ -40,6 +42,7 @@ public class UserRepositoryGatewayImpl implements UserRepositoryGateway {
     }
 
     @Override
+    @Transactional
     public void deleteByEmail(String email) {
         userRepository.deleteByEmail(email);
     }
