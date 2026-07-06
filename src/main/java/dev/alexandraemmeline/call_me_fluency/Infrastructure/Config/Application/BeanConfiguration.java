@@ -24,4 +24,9 @@ public class BeanConfiguration {
         return new ListUsersUseCaseImpl(userRepositoryGateway);
     }
 
+    @Bean
+    public FindUserByEmailUseCase findUserByEmailUseCase(UserRepositoryGateway userRepositoryGateway) {
+        return new FindUserByEmailUseCaseImpl(userRepositoryGateway);
+    }
+
 }

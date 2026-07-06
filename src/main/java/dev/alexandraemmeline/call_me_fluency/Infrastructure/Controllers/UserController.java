@@ -3,6 +3,7 @@ package dev.alexandraemmeline.call_me_fluency.Infrastructure.Controllers;
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.CreateUserUseCase;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.DeleteUserUseCase;
+import dev.alexandraemmeline.call_me_fluency.Core.UseCases.FindUserByEmailUseCase;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.ListUsersUseCase;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.CreateUserRequest;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.DeleteUserRequest;
@@ -26,6 +27,7 @@ public class UserController {
     private final CreateUserUseCase createUserUseCase;
     private final DeleteUserUseCase deleteUserUseCase;
     private final ListUsersUseCase listUsersUseCase;
+    private final FindUserByEmailUseCase findUserByEmailUseCase;
 
     @PostMapping
     public ResponseEntity<SuccessResponse<UserResponse>> create(@RequestBody CreateUserRequest createUserRequest) {
@@ -68,6 +70,24 @@ public class UserController {
                 true,
                 "Users listed successfully.",
                 listOfUsers,
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.ok(response);
+
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<SuccessResponse<UserResponse>> findByEmail(@PathVariable String email) {
+
+        UserDomain user = findUserByEmailUseCase.execute(email);
+
+        UserResponse userResponse = userMapper.toResponse(user);
+
+        SuccessResponse<UserResponse> response = new SuccessResponse<>(
+                true,
+                "User successfully found.",
+                userResponse,
                 LocalDateTime.now()
         );
 
