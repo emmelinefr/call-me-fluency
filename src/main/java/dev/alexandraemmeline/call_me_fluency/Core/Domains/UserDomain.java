@@ -21,7 +21,7 @@ public class UserDomain {
 
         validateName(name);
         validateEmail(email);
-        validatePassword(passwordHash);
+        validatePasswordHash(passwordHash);
 
         this.id = id;
         this.name = name;
@@ -50,16 +50,6 @@ public class UserDomain {
 
         if (!email.contains("@")) {
             throw new DomainException("Invalid email.");
-        }
-    }
-
-    private void validatePassword(String passwordHash) {
-        if (passwordHash == null || passwordHash.isBlank()) {
-            throw new DomainException("Password is required.");
-        }
-
-        if (passwordHash.length() < 8) {
-            throw new DomainException("The password must have at least 8 characters");
         }
     }
 
@@ -92,7 +82,6 @@ public class UserDomain {
         return status;
     }
 
-
     public void changeName(String newName) {
         validateName(newName);
         this.name = newName;
@@ -100,9 +89,15 @@ public class UserDomain {
     }
 
     public void changePasswordHash(String newPasswordHash) {
-        validatePassword(newPasswordHash);
+        validatePasswordHash(newPasswordHash);
         this.passwordHash = newPasswordHash;
 
+    }
+
+    private void validatePasswordHash(String passwordHash) {
+        if (passwordHash == null || passwordHash.isBlank()) {
+            throw new DomainException("Password hash is required.");
+        }
     }
 
     public void statusActivate() {
