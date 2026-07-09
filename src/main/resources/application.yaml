@@ -14,3 +14,7 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration
+
+  jwt:
+    expiration: ${JWT_EXPIRATION}
+    key: ${JWT_KEY}
