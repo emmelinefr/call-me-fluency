@@ -3,6 +3,7 @@ package dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence;
 import dev.alexandraemmeline.call_me_fluency.Core.Enums.Level;
 import dev.alexandraemmeline.call_me_fluency.Core.Enums.Status;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +26,7 @@ public class UserEntity {
     @Column(nullable = false, length = 100)
     private String name;
 
-    //todo @email
+    @Email
     @Column(nullable = false, unique = true, length = 100)
     private String email;
 
