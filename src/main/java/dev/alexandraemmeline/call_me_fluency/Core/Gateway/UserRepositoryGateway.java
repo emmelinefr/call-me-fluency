@@ -17,4 +17,6 @@ public interface UserRepositoryGateway {
 
     List<UserDomain> listUsers();
 
+    void update(UserDomain user);
+
 }

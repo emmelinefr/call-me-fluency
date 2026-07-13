@@ -29,4 +29,9 @@ public class BeanConfiguration {
         return new FindUserByEmailUseCaseImpl(userRepositoryGateway);
     }
 
+    @Bean
+    public ChangePasswordUseCase changePasswordUseCase(UserRepositoryGateway userRepositoryGateway, PasswordEncoder passwordEncoder) {
+        return new ChangePasswordUseCaseImpl(userRepositoryGateway, passwordEncoder);
+    }
+
 }

@@ -1,9 +1,6 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Handler;
 
-import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.DomainException;
-import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.EmailAlreadyExistsException;
-import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.InvalidCredentialsException;
-import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.UserNotFoundException;
+import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -59,6 +56,20 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidCredentialsException.class)
     public ResponseEntity<ErrorResponse> invalidCredentialsException(InvalidCredentialsException ex) {
+
+        ErrorResponse response = new ErrorResponse(
+                false,
+                ex.getMessage(),
+                List.of(ex.getMessage()),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.badRequest()
+                .body(response);
+    }
+
+    @ExceptionHandler(SamePasswordException.class)
+    public ResponseEntity<ErrorResponse> samePasswordException(InvalidCredentialsException ex) {
 
         ErrorResponse response = new ErrorResponse(
                 false,

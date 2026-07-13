@@ -1,15 +1,14 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Controllers;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.CreateUserUseCase;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.DeleteUserUseCase;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.FindUserByEmailUseCase;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.ListUsersUseCase;
+import dev.alexandraemmeline.call_me_fluency.Core.UseCases.*;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.ChangePasswordRequest;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.CreateUserRequest;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.DeleteUserRequest;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.UserResponse;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Handler.SuccessResponse;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Mappers.UserMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +27,7 @@ public class UserController {
     private final DeleteUserUseCase deleteUserUseCase;
     private final ListUsersUseCase listUsersUseCase;
     private final FindUserByEmailUseCase findUserByEmailUseCase;
+    private final ChangePasswordUseCase changePasswordUseCase;
 
     @PostMapping
     public ResponseEntity<SuccessResponse<UserResponse>> create(@RequestBody CreateUserRequest createUserRequest) {
@@ -93,6 +93,21 @@ public class UserController {
 
         return ResponseEntity.ok(response);
 
+    }
+
+    @PatchMapping("/me/password")
+    public ResponseEntity<SuccessResponse<Void>> changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
+
+        changePasswordUseCase.execute(changePasswordRequest.email(), changePasswordRequest.currentPassword(), changePasswordRequest.newPassword());
+
+        SuccessResponse<Void> response = new SuccessResponse<>(
+                true,
+                "Password changed successfully.",
+                null,
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.ok(response);
     }
 
 

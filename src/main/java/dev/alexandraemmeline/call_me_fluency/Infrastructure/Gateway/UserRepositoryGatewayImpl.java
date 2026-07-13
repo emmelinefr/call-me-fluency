@@ -57,4 +57,11 @@ public class UserRepositoryGatewayImpl implements UserRepositoryGateway {
                 .toList();
 
     }
+
+    @Override
+    public void update(UserDomain user) {
+        UserEntity userEntity = userMapper.toEntity(user);
+        userRepository.save(userEntity);
+
+    }
 }
