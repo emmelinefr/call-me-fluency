@@ -30,7 +30,7 @@ public class UserController {
     private final ChangePasswordUseCase changePasswordUseCase;
 
     @PostMapping
-    public ResponseEntity<SuccessResponse<UserResponse>> create(@RequestBody CreateUserRequest createUserRequest) {
+    public ResponseEntity<SuccessResponse<UserResponse>> create(@RequestBody @Valid CreateUserRequest createUserRequest) {
 
         UserDomain userToCreate = userMapper.toDomain(createUserRequest);
         UserDomain createdUser = createUserUseCase.execute(userToCreate);
@@ -50,7 +50,7 @@ public class UserController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> delete(@RequestBody DeleteUserRequest deleteUserRequest) {
+    public ResponseEntity<Void> delete(@RequestBody @Valid DeleteUserRequest deleteUserRequest) {
         deleteUserUseCase.execute(deleteUserRequest.email(), deleteUserRequest.password());
 
         return ResponseEntity.noContent()
@@ -96,7 +96,7 @@ public class UserController {
     }
 
     @PatchMapping("/me/password")
-    public ResponseEntity<SuccessResponse<Void>> changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
+    public ResponseEntity<SuccessResponse<Void>> changePassword(@RequestBody @Valid ChangePasswordRequest changePasswordRequest) {
 
         changePasswordUseCase.execute(changePasswordRequest.email(), changePasswordRequest.currentPassword(), changePasswordRequest.newPassword());
 
