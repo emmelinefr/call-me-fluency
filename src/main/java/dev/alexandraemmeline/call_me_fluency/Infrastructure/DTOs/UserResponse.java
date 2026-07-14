@@ -1,7 +1,7 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs;
 
-import dev.alexandraemmeline.call_me_fluency.Core.Enums.Level;
-import dev.alexandraemmeline.call_me_fluency.Core.Enums.Status;
+import dev.alexandraemmeline.call_me_fluency.Core.Enums.UserLevel;
+import dev.alexandraemmeline.call_me_fluency.Core.Enums.UserStatus;
 
 import java.time.LocalDateTime;
 
@@ -11,8 +11,8 @@ public record UserResponse(
         String name,
         String email,
         LocalDateTime createdAt,
-        Level level,
-        Status status
+        UserLevel userLevel,
+        UserStatus userStatus
 
 ) {
 }

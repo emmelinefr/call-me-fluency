@@ -1,10 +1,11 @@
 package dev.alexandraemmeline.call_me_fluency.Core.Domains;
 
-import dev.alexandraemmeline.call_me_fluency.Core.Enums.Level;
-import dev.alexandraemmeline.call_me_fluency.Core.Enums.Status;
+import dev.alexandraemmeline.call_me_fluency.Core.Enums.UserLevel;
+import dev.alexandraemmeline.call_me_fluency.Core.Enums.UserStatus;
 import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.DomainException;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 public class UserDomain {
 
@@ -13,11 +14,11 @@ public class UserDomain {
     private String email;
     private String passwordHash;
     private LocalDateTime createdAt;
-    private Level level;
-    private Status status;
+    private UserLevel userLevel;
+    private UserStatus userStatus;
 
 
-    public UserDomain(Long id, String name, String email, String passwordHash, LocalDateTime createdAt, Level level, Status status) {
+    public UserDomain(Long id, String name, String email, String passwordHash, LocalDateTime createdAt, UserLevel userLevel, UserStatus userStatus) {
 
         validateName(name);
         validateEmail(email);
@@ -28,8 +29,8 @@ public class UserDomain {
         this.email = email;
         this.passwordHash = passwordHash;
         this.createdAt = createdAt;
-        this.level = level;
-        this.status = status;
+        this.userLevel = userLevel;
+        this.userStatus = userStatus;
     }
 
 
@@ -74,12 +75,12 @@ public class UserDomain {
         return createdAt;
     }
 
-    public Level getLevel() {
-        return level;
+    public UserLevel getLevel() {
+        return userLevel;
     }
 
-    public Status getStatus() {
-        return status;
+    public UserStatus getStatus() {
+        return userStatus;
     }
 
     public void changeName(String newName) {
@@ -101,11 +102,11 @@ public class UserDomain {
     }
 
     public void statusActivate() {
-        this.status = Status.ACTIVE;
+        this.userStatus = UserStatus.ACTIVE;
     }
 
     public void statusDisabled() {
-        this.status = Status.INACTIVE;
+        this.userStatus = UserStatus.INACTIVE;
     }
 
     public void markAsCreated() {
@@ -117,8 +118,8 @@ public class UserDomain {
         this.createdAt = LocalDateTime.now();
     }
 
-    public void promoteTo(Level level) {
-        this.level = level;
+    public void promoteTo(UserLevel userLevel) {
+        this.userLevel = userLevel;
     }
 
 

@@ -1,7 +1,7 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence;
 
-import dev.alexandraemmeline.call_me_fluency.Core.Enums.Level;
-import dev.alexandraemmeline.call_me_fluency.Core.Enums.Status;
+import dev.alexandraemmeline.call_me_fluency.Core.Enums.UserLevel;
+import dev.alexandraemmeline.call_me_fluency.Core.Enums.UserStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
@@ -38,11 +38,11 @@ public class UserEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
-    private Level level;
+    private UserLevel userLevel;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
-    private Status status;
+    private UserStatus userStatus;
 
 
 

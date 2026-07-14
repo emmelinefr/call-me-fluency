@@ -1,6 +1,6 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs;
 
-import dev.alexandraemmeline.call_me_fluency.Core.Enums.Level;
+import dev.alexandraemmeline.call_me_fluency.Core.Enums.UserLevel;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -20,7 +20,7 @@ public record CreateUserRequest(
         String password,
         
         @NotNull
-        Level level
+        UserLevel userLevel
 
 ) {
 }

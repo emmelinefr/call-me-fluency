@@ -1,6 +1,6 @@
 package dev.alexandraemmeline.call_me_fluency.Core.Enums;
 
-public enum Level {
+public enum UserLevel {
 
     BEGINNER,
     INTERMEDIATE,

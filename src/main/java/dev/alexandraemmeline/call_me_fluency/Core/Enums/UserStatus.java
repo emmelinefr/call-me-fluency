@@ -1,6 +1,6 @@
 package dev.alexandraemmeline.call_me_fluency.Core.Enums;
 
-public enum Status {
+public enum UserStatus {
 
     ACTIVE,
     INACTIVE,
