@@ -37,11 +37,11 @@ public class UserEntity {
     private LocalDateTime createdAt;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
+    @Column(name = "user_level", nullable = false, length = 20)
     private UserLevel userLevel;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
+    @Column(name = "user_status", nullable = false, length = 20)
     private UserStatus userStatus;
 
 

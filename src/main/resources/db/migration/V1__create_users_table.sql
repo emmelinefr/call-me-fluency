@@ -4,6 +4,6 @@ CREATE TABLE users (
     email VARCHAR(100) NOT NULL UNIQUE,
     password_hash CHAR(60) NOT NULL,
     created_at TIMESTAMP NOT NULL,
-    userLevel VARCHAR(20) NOT NULL,
-    userStatus VARCHAR(20) NOT NULL
+    user_level VARCHAR(20) NOT NULL,
+    user_status VARCHAR(20) NOT NULL
 );
