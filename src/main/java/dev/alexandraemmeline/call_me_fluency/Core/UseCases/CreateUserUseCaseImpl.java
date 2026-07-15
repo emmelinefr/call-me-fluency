@@ -1,6 +1,7 @@
 package dev.alexandraemmeline.call_me_fluency.Core.UseCases;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
+import dev.alexandraemmeline.call_me_fluency.Core.Enums.RoleName;
 import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.EmailAlreadyExistsException;
 import dev.alexandraemmeline.call_me_fluency.Core.Gateway.UserRepositoryGateway;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,6 +28,7 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
 
         userDomain.markAsCreated();
         userDomain.statusActivate();
+        userDomain.addRole(RoleName.ROLE_USER);
 
         return userRepositoryGateway.createUser(userDomain);
     }
