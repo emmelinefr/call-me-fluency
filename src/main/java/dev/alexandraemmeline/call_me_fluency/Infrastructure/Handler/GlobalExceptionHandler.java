@@ -1,6 +1,7 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Handler;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.*;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.Exceptions.RoleNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -70,6 +71,20 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(SamePasswordException.class)
     public ResponseEntity<ErrorResponse> samePasswordException(InvalidCredentialsException ex) {
+
+        ErrorResponse response = new ErrorResponse(
+                false,
+                ex.getMessage(),
+                List.of(ex.getMessage()),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.badRequest()
+                .body(response);
+    }
+
+    @ExceptionHandler(RoleNotFoundException.class)
+    public ResponseEntity<ErrorResponse> roleNotFoundException(RoleNotFoundException ex) {
 
         ErrorResponse response = new ErrorResponse(
                 false,
