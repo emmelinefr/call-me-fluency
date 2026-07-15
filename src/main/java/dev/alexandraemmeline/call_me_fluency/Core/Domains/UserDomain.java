@@ -1,10 +1,13 @@
 package dev.alexandraemmeline.call_me_fluency.Core.Domains;
 
-import dev.alexandraemmeline.call_me_fluency.Core.Enums.Level;
-import dev.alexandraemmeline.call_me_fluency.Core.Enums.Status;
+import dev.alexandraemmeline.call_me_fluency.Core.Enums.RoleName;
+import dev.alexandraemmeline.call_me_fluency.Core.Enums.UserLevel;
+import dev.alexandraemmeline.call_me_fluency.Core.Enums.UserStatus;
 import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.DomainException;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 public class UserDomain {
 
@@ -13,11 +16,12 @@ public class UserDomain {
     private String email;
     private String passwordHash;
     private LocalDateTime createdAt;
-    private Level level;
-    private Status status;
+    private UserLevel userLevel;
+    private UserStatus userStatus;
+    private final Set<RoleName> roles = new HashSet<>();
 
 
-    public UserDomain(Long id, String name, String email, String passwordHash, LocalDateTime createdAt, Level level, Status status) {
+    public UserDomain(Long id, String name, String email, String passwordHash, LocalDateTime createdAt, UserLevel userLevel, UserStatus userStatus) {
 
         validateName(name);
         validateEmail(email);
@@ -28,8 +32,8 @@ public class UserDomain {
         this.email = email;
         this.passwordHash = passwordHash;
         this.createdAt = createdAt;
-        this.level = level;
-        this.status = status;
+        this.userLevel = userLevel;
+        this.userStatus = userStatus;
     }
 
 
@@ -50,6 +54,12 @@ public class UserDomain {
 
         if (!email.contains("@")) {
             throw new DomainException("Invalid email.");
+        }
+    }
+
+    private void validatePasswordHash(String passwordHash) {
+        if (passwordHash == null || passwordHash.isBlank()) {
+            throw new DomainException("Password hash is required.");
         }
     }
 
@@ -74,13 +84,19 @@ public class UserDomain {
         return createdAt;
     }
 
-    public Level getLevel() {
-        return level;
+    public UserLevel getUserLevel() {
+        return userLevel;
     }
 
-    public Status getStatus() {
-        return status;
+    public UserStatus getUserStatus() {
+        return userStatus;
     }
+
+    public Set<RoleName> getRoles() {
+        return Set.copyOf(roles);
+    }
+
+
 
     public void changeName(String newName) {
         validateName(newName);
@@ -94,18 +110,12 @@ public class UserDomain {
 
     }
 
-    private void validatePasswordHash(String passwordHash) {
-        if (passwordHash == null || passwordHash.isBlank()) {
-            throw new DomainException("Password hash is required.");
-        }
-    }
-
     public void statusActivate() {
-        this.status = Status.ACTIVE;
+        this.userStatus = UserStatus.ACTIVE;
     }
 
     public void statusDisabled() {
-        this.status = Status.INACTIVE;
+        this.userStatus = UserStatus.INACTIVE;
     }
 
     public void markAsCreated() {
@@ -117,8 +127,16 @@ public class UserDomain {
         this.createdAt = LocalDateTime.now();
     }
 
-    public void promoteTo(Level level) {
-        this.level = level;
+    public void promoteTo(UserLevel userLevel) {
+        this.userLevel = userLevel;
+    }
+
+    public void addRole (RoleName roleName) {
+        if (roleName == null) {
+            throw new DomainException("Role cannot be null.");
+        }
+
+        roles.add(roleName);
     }
 
 

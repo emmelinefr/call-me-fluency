@@ -1,9 +1,8 @@
 package dev.alexandraemmeline.call_me_fluency.Core.Enums;
 
-public enum Status {
+public enum RoleName {
 
-    ACTIVE,
-    INACTIVE,
-    PENDING
+    ROLE_USER,
+    ROLE_ADMIN
 
 }

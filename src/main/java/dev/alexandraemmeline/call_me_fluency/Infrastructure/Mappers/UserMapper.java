@@ -1,8 +1,10 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Mappers;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
+import dev.alexandraemmeline.call_me_fluency.Core.Enums.RoleName;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.CreateUserRequest;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.UserResponse;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.RoleEntity;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -22,5 +24,9 @@ public interface UserMapper {
     UserResponse toResponse(UserDomain userDomain);
 
     List<UserResponse> toUserResponseList(List<UserEntity> userEntityList);
+
+    default RoleName mapRoleEntityToRoleName(RoleEntity roleEntity) {
+        return roleEntity.getName();
+    }
 
 }
