@@ -1,10 +1,12 @@
 package dev.alexandraemmeline.call_me_fluency.Core.Domains;
 
+import dev.alexandraemmeline.call_me_fluency.Core.Enums.RoleName;
 import dev.alexandraemmeline.call_me_fluency.Core.Enums.UserLevel;
 import dev.alexandraemmeline.call_me_fluency.Core.Enums.UserStatus;
 import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.DomainException;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 public class UserDomain {
@@ -16,6 +18,7 @@ public class UserDomain {
     private LocalDateTime createdAt;
     private UserLevel userLevel;
     private UserStatus userStatus;
+    private final Set<RoleName> roles = new HashSet<>();
 
 
     public UserDomain(Long id, String name, String email, String passwordHash, LocalDateTime createdAt, UserLevel userLevel, UserStatus userStatus) {
@@ -54,6 +57,12 @@ public class UserDomain {
         }
     }
 
+    private void validatePasswordHash(String passwordHash) {
+        if (passwordHash == null || passwordHash.isBlank()) {
+            throw new DomainException("Password hash is required.");
+        }
+    }
+
 
     public Long getId() {
         return id;
@@ -75,13 +84,19 @@ public class UserDomain {
         return createdAt;
     }
 
-    public UserLevel getLevel() {
+    public UserLevel getUserLevel() {
         return userLevel;
     }
 
-    public UserStatus getStatus() {
+    public UserStatus getUserStatus() {
         return userStatus;
     }
+
+    public Set<RoleName> getRoles() {
+        return Set.copyOf(roles);
+    }
+
+
 
     public void changeName(String newName) {
         validateName(newName);
@@ -93,12 +108,6 @@ public class UserDomain {
         validatePasswordHash(newPasswordHash);
         this.passwordHash = newPasswordHash;
 
-    }
-
-    private void validatePasswordHash(String passwordHash) {
-        if (passwordHash == null || passwordHash.isBlank()) {
-            throw new DomainException("Password hash is required.");
-        }
     }
 
     public void statusActivate() {
@@ -120,6 +129,14 @@ public class UserDomain {
 
     public void promoteTo(UserLevel userLevel) {
         this.userLevel = userLevel;
+    }
+
+    public void addRole (RoleName roleName) {
+        if (roleName == null) {
+            throw new DomainException("Role cannot be null.");
+        }
+
+        roles.add(roleName);
     }
 
 
