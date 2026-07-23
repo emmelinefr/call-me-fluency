@@ -1,4 +1,4 @@
-package dev.alexandraemmeline.call_me_fluency.Infrastructure.Config.Application;
+package dev.alexandraemmeline.call_me_fluency.Infrastructure.Config.Security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
