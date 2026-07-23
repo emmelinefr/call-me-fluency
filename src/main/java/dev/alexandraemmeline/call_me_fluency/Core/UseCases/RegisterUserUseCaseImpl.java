@@ -6,12 +6,12 @@ import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.EmailAlreadyExistsE
 import dev.alexandraemmeline.call_me_fluency.Core.Gateway.UserRepositoryGateway;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-public class CreateUserUseCaseImpl implements CreateUserUseCase {
+public class RegisterUserUseCaseImpl implements RegisterUserUseCase {
 
     private final UserRepositoryGateway userRepositoryGateway;
     private final PasswordEncoder passwordEncoder;
 
-    public CreateUserUseCaseImpl(UserRepositoryGateway userRepositoryGateway, PasswordEncoder passwordEncoder) {
+    public RegisterUserUseCaseImpl(UserRepositoryGateway userRepositoryGateway, PasswordEncoder passwordEncoder) {
         this.userRepositoryGateway = userRepositoryGateway;
         this.passwordEncoder = passwordEncoder;
     }

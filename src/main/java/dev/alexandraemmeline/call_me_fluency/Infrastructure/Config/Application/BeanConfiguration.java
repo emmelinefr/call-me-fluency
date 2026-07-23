@@ -10,8 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class BeanConfiguration {
 
     @Bean
-    public CreateUserUseCase createUserUseCase(UserRepositoryGateway userRepositoryGateway, PasswordEncoder passwordEncoder) {
-        return new CreateUserUseCaseImpl(userRepositoryGateway,passwordEncoder);
+    public RegisterUserUseCase createUserUseCase(UserRepositoryGateway userRepositoryGateway, PasswordEncoder passwordEncoder) {
+        return new RegisterUserUseCaseImpl(userRepositoryGateway,passwordEncoder);
     }
 
     @Bean
