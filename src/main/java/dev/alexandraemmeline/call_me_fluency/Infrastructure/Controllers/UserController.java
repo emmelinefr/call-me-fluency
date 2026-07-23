@@ -23,31 +23,12 @@ import java.util.List;
 public class UserController {
 
     private final UserMapper userMapper;
-    private final CreateUserUseCase createUserUseCase;
     private final DeleteUserUseCase deleteUserUseCase;
     private final ListUsersUseCase listUsersUseCase;
     private final FindUserByEmailUseCase findUserByEmailUseCase;
     private final ChangePasswordUseCase changePasswordUseCase;
 
-    @PostMapping
-    public ResponseEntity<SuccessResponse<UserResponse>> create(@RequestBody @Valid CreateUserRequest createUserRequest) {
 
-        UserDomain userToCreate = userMapper.toDomain(createUserRequest);
-        UserDomain createdUser = createUserUseCase.execute(userToCreate);
-
-        UserResponse userCreatedResponse = userMapper.toResponse(createdUser);
-
-        SuccessResponse<UserResponse> response = new SuccessResponse<>(
-                true,
-                "User created successfully.",
-                userCreatedResponse,
-                LocalDateTime.now()
-        );
-
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(response);
-
-    }
 
     @DeleteMapping
     public ResponseEntity<Void> delete(@RequestBody @Valid DeleteUserRequest deleteUserRequest) {
