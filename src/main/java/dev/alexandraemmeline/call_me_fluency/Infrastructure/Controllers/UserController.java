@@ -3,14 +3,12 @@ package dev.alexandraemmeline.call_me_fluency.Infrastructure.Controllers;
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.*;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.ChangePasswordRequest;
-import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.CreateUserRequest;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.DeleteUserRequest;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.UserResponse;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Handler.SuccessResponse;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Mappers.UserMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

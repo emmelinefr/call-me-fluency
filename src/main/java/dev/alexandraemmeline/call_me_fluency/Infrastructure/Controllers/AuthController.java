@@ -2,7 +2,7 @@ package dev.alexandraemmeline.call_me_fluency.Infrastructure.Controllers;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.RegisterUserUseCase;
-import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.CreateUserRequest;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.RegisterUserRequest;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.UserResponse;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Handler.SuccessResponse;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Mappers.UserMapper;
@@ -27,17 +27,17 @@ public class AuthController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<SuccessResponse<UserResponse>> register(@RequestBody @Valid CreateUserRequest createUserRequest) {
+    public ResponseEntity<SuccessResponse<UserResponse>> register(@RequestBody @Valid RegisterUserRequest registerUserRequest) {
 
-        UserDomain userToCreate = userMapper.toDomain(createUserRequest);
+        UserDomain userToCreate = userMapper.toDomain(registerUserRequest);
         UserDomain createdUser = registerUserUseCase.execute(userToCreate);
 
-        UserResponse userCreatedResponse = userMapper.toResponse(createdUser);
+        UserResponse userRegisteredResponse = userMapper.toResponse(createdUser);
 
         SuccessResponse<UserResponse> response = new SuccessResponse<>(
                 true,
                 "User created successfully.",
-                userCreatedResponse,
+                userRegisteredResponse,
                 LocalDateTime.now()
         );
 
@@ -45,6 +45,9 @@ public class AuthController {
                 .body(response);
 
     }
+
+
+    //login
 
 
 
