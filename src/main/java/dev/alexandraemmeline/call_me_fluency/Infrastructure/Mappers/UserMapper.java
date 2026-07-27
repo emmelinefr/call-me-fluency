@@ -2,6 +2,7 @@ package dev.alexandraemmeline.call_me_fluency.Infrastructure.Mappers;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
 import dev.alexandraemmeline.call_me_fluency.Core.Enums.RoleName;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.LoginRequest;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.RegisterUserRequest;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.UserResponse;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.RoleEntity;
@@ -16,6 +17,9 @@ public interface UserMapper {
 
     @Mapping(target = "passwordHash", source = "password")
     UserDomain toDomain(RegisterUserRequest registerUserRequest);
+
+    @Mapping(target = "passwordHash", source = "password")
+    UserDomain toDomain(LoginRequest loginRequest);
 
     UserDomain toDomain(UserEntity userEntity);
 
