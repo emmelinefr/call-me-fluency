@@ -1,5 +1,6 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Config.Security;
 
+import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -21,10 +22,10 @@ public class TokenProvider {
 
 
 
-    public String generateToken(Authentication authentication) {
-        UserDetails user = (UserDetails) authentication.getPrincipal();
+    public String generateToken(UserDomain userDomain) {
+        String username = userDomain.getEmail();
 
-        return buildToken(user.getUsername());
+        return buildToken(username);
     }
 
 
