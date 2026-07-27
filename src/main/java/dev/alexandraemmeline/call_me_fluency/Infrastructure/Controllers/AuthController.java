@@ -1,7 +1,10 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Controllers;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
+import dev.alexandraemmeline.call_me_fluency.Core.UseCases.LoginUseCase;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.RegisterUserUseCase;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.LoginRequest;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.LoginResponse;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.RegisterUserRequest;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.UserResponse;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Handler.SuccessResponse;
@@ -24,6 +27,7 @@ public class AuthController {
 
     private final UserMapper userMapper;
     private final RegisterUserUseCase registerUserUseCase;
+    private final LoginUseCase loginUseCase;
 
 
     @PostMapping("/register")
@@ -48,9 +52,22 @@ public class AuthController {
 
 
     //login
+    @PostMapping("/login")
+    public ResponseEntity<SuccessResponse<LoginResponse>> login(@RequestBody @Valid LoginRequest loginRequest) {
 
+        String token = loginUseCase.execute(loginRequest.email(), loginRequest.password());
 
+        LoginResponse loginResponse = new LoginResponse(token);
 
+        SuccessResponse<LoginResponse> response = new SuccessResponse<>(
+                true,
+                "Login successful",
+                loginResponse,
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.ok(response);
+    }
 
 
 }
