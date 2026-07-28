@@ -25,6 +25,7 @@ public class UserController {
     private final ListUsersUseCase listUsersUseCase;
     private final FindUserByEmailUseCase findUserByEmailUseCase;
     private final ChangePasswordUseCase changePasswordUseCase;
+    private final PromoteUserToAdminUseCase promoteUserToAdminUseCase;
 
 
 
@@ -87,6 +88,23 @@ public class UserController {
         );
 
         return ResponseEntity.ok(response);
+    }
+
+
+    @PatchMapping("{id}/promote")
+    public ResponseEntity<SuccessResponse> promoteToAdmin(@PathVariable Long id) {
+
+        promoteUserToAdminUseCase.execute(id);
+
+        SuccessResponse<Void> response = new SuccessResponse<>(
+                true,
+                "User promoted to administrator successfully.",
+                null,
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.ok(response);
+
     }
 
 
