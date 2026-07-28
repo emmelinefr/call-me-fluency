@@ -18,3 +18,8 @@ spring:
   jwt:
     expiration: ${JWT_EXPIRATION}
     key: ${JWT_KEY}
+
+  bootstrap:
+    name: ${INITIAL_ADMIN_NAME}
+    email: ${INITIAL_ADMIN_EMAIL}
+    password: ${INITIAL_ADMIN_PASSWORD}
