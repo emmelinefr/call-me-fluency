@@ -41,4 +41,9 @@ public class BeanConfiguration {
         return new LoginUseCaseImpl(authenticationGateway, tokenProviderGateway);
     }
 
+    @Bean
+    public PromoteUserToAdminUseCase promoteUserToAdminUseCase(UserRepositoryGateway userRepositoryGateway) {
+        return new PromoteUserToAdminUseCaseImpl(userRepositoryGateway);
+    }
+
 }
