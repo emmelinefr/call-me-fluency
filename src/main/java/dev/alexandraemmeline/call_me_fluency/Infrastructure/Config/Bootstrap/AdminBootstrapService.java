@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 @RequiredArgsConstructor
 public class AdminBootstrapService {
@@ -24,7 +26,7 @@ public class AdminBootstrapService {
     @Value("${bootstrap.admin.name}")
     private String name;
 
-    @Value("${bootstrao.admin.email}")
+    @Value("${bootstrap.admin.email}")
     private String email;
 
     @Value("${bootstrap.admin.password}")
@@ -48,6 +50,7 @@ public class AdminBootstrapService {
         admin.setEmail(email);
         admin.setPasswordHash(passwordEncoder.encode(password));
 
+        admin.setCreatedAt(LocalDateTime.now());
         admin.setUserLevel(UserLevel.ADVANCED);
         admin.setUserStatus(UserStatus.ACTIVE);
 
