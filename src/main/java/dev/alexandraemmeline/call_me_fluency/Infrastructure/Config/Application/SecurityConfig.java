@@ -39,7 +39,7 @@ public class SecurityConfig {
                 )
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST,"v1/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/v1/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
 
