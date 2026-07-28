@@ -11,6 +11,7 @@ import dev.alexandraemmeline.call_me_fluency.Infrastructure.Handler.SuccessRespo
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Mappers.UserMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +29,8 @@ public class AuthController {
     private final UserMapper userMapper;
     private final RegisterUserUseCase registerUserUseCase;
     private final LoginUseCase loginUseCase;
+    @Value("${jwt.expiration}")
+    private Long expirationTime;
 
 
     @PostMapping("/register")
@@ -51,13 +54,12 @@ public class AuthController {
     }
 
 
-    //login
     @PostMapping("/login")
     public ResponseEntity<SuccessResponse<LoginResponse>> login(@RequestBody @Valid LoginRequest loginRequest) {
 
         String token = loginUseCase.execute(loginRequest.email(), loginRequest.password());
 
-        LoginResponse loginResponse = new LoginResponse(token);
+        LoginResponse loginResponse = new LoginResponse(token, expirationTime);
 
         SuccessResponse<LoginResponse> response = new SuccessResponse<>(
                 true,
