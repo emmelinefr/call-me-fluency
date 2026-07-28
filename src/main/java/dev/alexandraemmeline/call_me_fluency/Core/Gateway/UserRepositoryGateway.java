@@ -9,7 +9,7 @@ public interface UserRepositoryGateway {
 
     boolean existsByEmail(String email);
 
-    UserDomain registerUser(UserDomain userDomain);
+    UserDomain save(UserDomain userDomain);
 
     Optional<UserDomain> findByEmail(String email);
 
@@ -18,5 +18,7 @@ public interface UserRepositoryGateway {
     List<UserDomain> listUsers();
 
     void update(UserDomain user);
+
+    Optional<UserDomain> findById(Long id);
 
 }

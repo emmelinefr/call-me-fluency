@@ -3,6 +3,7 @@ package dev.alexandraemmeline.call_me_fluency.Core.Domains;
 import dev.alexandraemmeline.call_me_fluency.Core.Enums.RoleName;
 import dev.alexandraemmeline.call_me_fluency.Core.Enums.UserLevel;
 import dev.alexandraemmeline.call_me_fluency.Core.Enums.UserStatus;
+import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.AlreadyAdministratorException;
 import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.DomainException;
 
 import java.time.LocalDateTime;
@@ -145,6 +146,15 @@ public class UserDomain {
         }
 
         roles.add(roleName);
+    }
+
+    public void promoteToAdmin() {
+        if (roles.contains(RoleName.ROLE_ADMIN)) {
+            throw new AlreadyAdministratorException();
+        }
+
+        roles.add(RoleName.ROLE_ADMIN);
+
     }
 
 

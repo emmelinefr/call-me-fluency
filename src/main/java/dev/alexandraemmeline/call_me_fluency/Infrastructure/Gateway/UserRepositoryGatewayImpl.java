@@ -33,7 +33,7 @@ public class UserRepositoryGatewayImpl implements UserRepositoryGateway {
 
     @Override
     @Transactional
-    public UserDomain registerUser(UserDomain userDomain) {
+    public UserDomain save(UserDomain userDomain) {
         UserEntity userEntity = userMapper.toEntity(userDomain);
 
         Set<RoleEntity> roles = userDomain.getRoles()
@@ -80,4 +80,13 @@ public class UserRepositoryGatewayImpl implements UserRepositoryGateway {
         userRepository.save(userEntity);
 
     }
+
+    @Override
+    public Optional<UserDomain> findById(Long id) {
+
+        return userRepository.findById(id)
+                .map(userMapper::toDomain);
+
+    }
+
 }
