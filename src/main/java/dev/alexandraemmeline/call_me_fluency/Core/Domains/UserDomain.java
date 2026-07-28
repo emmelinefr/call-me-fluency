@@ -96,6 +96,14 @@ public class UserDomain {
         return Set.copyOf(roles);
     }
 
+    public void setRoles(Set<RoleName> roles) {
+        this.roles.clear();
+
+        if (roles != null) {
+            this.roles.addAll(roles);
+        }
+    }
+
 
 
     public void changeName(String newName) {
