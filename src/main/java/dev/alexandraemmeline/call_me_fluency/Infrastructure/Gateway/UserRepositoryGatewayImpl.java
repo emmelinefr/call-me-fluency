@@ -33,7 +33,7 @@ public class UserRepositoryGatewayImpl implements UserRepositoryGateway {
 
     @Override
     @Transactional
-    public UserDomain createUser(UserDomain userDomain) {
+    public UserDomain registerUser(UserDomain userDomain) {
         UserEntity userEntity = userMapper.toEntity(userDomain);
 
         Set<RoleEntity> roles = userDomain.getRoles()

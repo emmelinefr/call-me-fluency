@@ -30,7 +30,7 @@ public class RegisterUserUseCaseImpl implements RegisterUserUseCase {
         userDomain.statusActivate();
         userDomain.addRole(RoleName.ROLE_USER);
 
-        return userRepositoryGateway.createUser(userDomain);
+        return userRepositoryGateway.registerUser(userDomain);
     }
 
 }
