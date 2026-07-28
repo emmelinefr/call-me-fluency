@@ -1,5 +1,7 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Config.Application;
 
+import dev.alexandraemmeline.call_me_fluency.Core.Gateway.AuthenticationGateway;
+import dev.alexandraemmeline.call_me_fluency.Core.Gateway.TokenProviderGateway;
 import dev.alexandraemmeline.call_me_fluency.Core.Gateway.UserRepositoryGateway;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.*;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +34,11 @@ public class BeanConfiguration {
     @Bean
     public ChangePasswordUseCase changePasswordUseCase(UserRepositoryGateway userRepositoryGateway, PasswordEncoder passwordEncoder) {
         return new ChangePasswordUseCaseImpl(userRepositoryGateway, passwordEncoder);
+    }
+
+    @Bean
+    public LoginUseCase loginUseCase(AuthenticationGateway authenticationGateway, TokenProviderGateway tokenProviderGateway) {
+        return new LoginUseCaseImpl(authenticationGateway, tokenProviderGateway);
     }
 
 }
