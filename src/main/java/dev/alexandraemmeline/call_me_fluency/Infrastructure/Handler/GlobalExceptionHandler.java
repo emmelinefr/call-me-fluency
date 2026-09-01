@@ -2,7 +2,9 @@ package dev.alexandraemmeline.call_me_fluency.Infrastructure.Handler;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.*;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Exceptions.RoleNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -108,6 +110,20 @@ public class GlobalExceptionHandler {
         );
 
         return ResponseEntity.badRequest()
+                .body(response);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> accessDeniedException(AccessDeniedException ex) {
+
+        ErrorResponse response = new ErrorResponse(
+                false,
+                ex.getMessage(),
+                List.of(ex.getMessage()),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
                 .body(response);
     }
 
