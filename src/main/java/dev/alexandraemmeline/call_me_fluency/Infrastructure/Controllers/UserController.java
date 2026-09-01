@@ -10,6 +10,7 @@ import dev.alexandraemmeline.call_me_fluency.Infrastructure.Mappers.UserMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -28,7 +29,7 @@ public class UserController {
     private final PromoteUserToAdminUseCase promoteUserToAdminUseCase;
 
 
-
+    @PreAuthorize("hasRole('ADMIN') or #deleteUserRequest.email == authentication.principal.username")
     @DeleteMapping
     public ResponseEntity<Void> delete(@RequestBody @Valid DeleteUserRequest deleteUserRequest) {
         deleteUserUseCase.execute(deleteUserRequest.email(), deleteUserRequest.password());
@@ -39,6 +40,7 @@ public class UserController {
     }
 
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<SuccessResponse<List<UserResponse>>> listAll() {
         List<UserResponse> listOfUsers = listUsersUseCase.execute()
@@ -57,6 +59,7 @@ public class UserController {
 
     }
 
+    @PreAuthorize("hasRole('ADMIN') or #email == authentication.principal.username")
     @GetMapping("/email/{email}")
     public ResponseEntity<SuccessResponse<UserResponse>> findByEmail(@PathVariable String email) {
 
@@ -75,6 +78,7 @@ public class UserController {
 
     }
 
+    @PreAuthorize("hasRole('ADMIN') or #changePasswordRequest.email == authentication.principal.username")
     @PatchMapping("/me/password")
     public ResponseEntity<SuccessResponse<Void>> changePassword(@RequestBody @Valid ChangePasswordRequest changePasswordRequest) {
 
@@ -91,6 +95,7 @@ public class UserController {
     }
 
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("{id}/promote")
     public ResponseEntity<SuccessResponse> promoteToAdmin(@PathVariable Long id) {
 
