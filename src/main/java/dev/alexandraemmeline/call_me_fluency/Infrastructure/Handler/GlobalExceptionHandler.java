@@ -127,4 +127,18 @@ public class GlobalExceptionHandler {
                 .body(response);
     }
 
+    @ExceptionHandler(InvalidPracticeScheduleDurationException.class)
+    public ResponseEntity<ErrorResponse> invalidPracticeScheduleDurationException(InvalidPracticeScheduleDurationException ex) {
+
+        ErrorResponse response = new ErrorResponse(
+                false,
+                ex.getMessage(),
+                List.of(ex.getMessage()),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.badRequest()
+                .body(response);
+    }
+
 }
