@@ -43,7 +43,7 @@ public class PracticeDayDomain {
     }
 
 
-    //setters
+    //behaviors
     //changeTime
     public void changeTime(LocalTime time) {
         this.time = Objects.requireNonNull(time, "Time cannot be null.");
