@@ -45,7 +45,7 @@ public class UserEntity {
     private UserStatus userStatus;
 
 
-
+    //user & roles
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
@@ -53,6 +53,14 @@ public class UserEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<RoleEntity> roles = new HashSet<>();
+
+
+    //user & practice_schedule
+    @OneToOne(
+            mappedBy = "user",
+            cascade = CascadeType.ALL
+    )
+    private PracticeScheduleEntity practiceScheduleEntity;
 
 }
 
