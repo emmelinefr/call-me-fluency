@@ -30,7 +30,7 @@ public class PracticeScheduleEntity {
 
 
     //practice_schedule & practice_day
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(
             name = "practice_days",
             joinColumns = @JoinColumn(name = "practice_schedule_id")
