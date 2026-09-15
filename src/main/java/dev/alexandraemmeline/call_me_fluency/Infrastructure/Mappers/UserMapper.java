@@ -2,11 +2,11 @@ package dev.alexandraemmeline.call_me_fluency.Infrastructure.Mappers;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
 import dev.alexandraemmeline.call_me_fluency.Core.Enums.RoleName;
-import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.LoginRequest;
-import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.RegisterUserRequest;
-import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.UserResponse;
-import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.RoleEntity;
-import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.UserEntity;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.User.LoginRequest;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.User.RegisterUserRequest;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.User.UserResponse;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.User.RoleEntity;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.User.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

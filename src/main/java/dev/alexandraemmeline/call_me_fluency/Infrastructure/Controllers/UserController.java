@@ -2,9 +2,9 @@ package dev.alexandraemmeline.call_me_fluency.Infrastructure.Controllers;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.*;
-import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.ChangePasswordRequest;
-import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.DeleteUserRequest;
-import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.UserResponse;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.User.ChangePasswordRequest;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.User.DeleteUserRequest;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.User.UserResponse;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Handler.SuccessResponse;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Mappers.UserMapper;
 import jakarta.validation.Valid;

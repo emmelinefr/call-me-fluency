@@ -1,4 +1,4 @@
-package dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs;
+package dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.User;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Enums.UserLevel;
 import dev.alexandraemmeline.call_me_fluency.Core.Enums.UserStatus;

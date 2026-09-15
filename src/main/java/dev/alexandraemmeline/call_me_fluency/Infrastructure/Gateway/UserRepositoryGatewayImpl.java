@@ -1,14 +1,13 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Gateway;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
-import dev.alexandraemmeline.call_me_fluency.Core.Enums.RoleName;
 import dev.alexandraemmeline.call_me_fluency.Core.Gateway.UserRepositoryGateway;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Exceptions.RoleNotFoundException;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Mappers.UserMapper;
-import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.RoleEntity;
-import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.RoleRepository;
-import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.UserEntity;
-import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.UserRepository;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.User.RoleEntity;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.User.RoleRepository;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.User.UserEntity;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.User.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,7 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Gateway;
 
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Adapters.UserDetailsAdapter;
-import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.UserRepository;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.User.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,7 +1,8 @@
-package dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence;
+package dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.User;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Enums.UserLevel;
 import dev.alexandraemmeline.call_me_fluency.Core.Enums.UserStatus;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.PracticeSchedule.PracticeScheduleEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;

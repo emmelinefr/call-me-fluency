@@ -1,6 +1,6 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Adapters;
 
-import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.UserEntity;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.User.UserEntity;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
