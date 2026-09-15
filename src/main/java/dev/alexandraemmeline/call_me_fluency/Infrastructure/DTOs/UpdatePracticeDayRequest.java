@@ -1,0 +1,20 @@
+package dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs;
+
+import jakarta.validation.constraints.NotNull;
+
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+
+public record UpdatePracticeDayRequest(
+
+        @NotNull
+        DayOfWeek dayOfWeek,
+
+        @NotNull
+        LocalTime time,
+
+        @NotNull
+        Integer duration
+
+) {
+}
