@@ -1,8 +1,8 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Controllers;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.LoginUseCase;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.RegisterUserUseCase;
+import dev.alexandraemmeline.call_me_fluency.Core.UseCases.User.LoginUseCase;
+import dev.alexandraemmeline.call_me_fluency.Core.UseCases.User.RegisterUserUseCase;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.User.LoginRequest;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.User.LoginResponse;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.User.RegisterUserRequest;
@@ -36,6 +36,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<SuccessResponse<UserResponse>> register(@RequestBody @Valid RegisterUserRequest registerUserRequest) {
 
+        System.out.println(">>> CHEGOU NO REGISTER");
         UserDomain userToCreate = userMapper.toDomain(registerUserRequest);
         UserDomain createdUser = registerUserUseCase.execute(userToCreate);
 

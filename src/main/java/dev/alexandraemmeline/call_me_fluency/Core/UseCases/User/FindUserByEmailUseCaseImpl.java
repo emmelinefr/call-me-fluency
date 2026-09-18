@@ -1,26 +1,24 @@
-package dev.alexandraemmeline.call_me_fluency.Core.UseCases;
+package dev.alexandraemmeline.call_me_fluency.Core.UseCases.User;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
 import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.UserNotFoundException;
 import dev.alexandraemmeline.call_me_fluency.Core.Gateway.UserRepositoryGateway;
 
-public class PromoteUserToAdminUseCaseImpl implements PromoteUserToAdminUseCase {
+public class FindUserByEmailUseCaseImpl implements FindUserByEmailUseCase {
 
     private final UserRepositoryGateway userRepositoryGateway;
-
-    public PromoteUserToAdminUseCaseImpl(UserRepositoryGateway userRepositoryGateway) {
+    public FindUserByEmailUseCaseImpl(UserRepositoryGateway userRepositoryGateway) {
         this.userRepositoryGateway = userRepositoryGateway;
     }
 
-    @Override
-    public void execute(Long id) {
 
-        UserDomain userDomain = userRepositoryGateway.findById(id)
+    @Override
+    public UserDomain execute(String email) {
+
+        UserDomain user = userRepositoryGateway.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException());
 
-        userDomain.promoteToAdmin();
-
-        userRepositoryGateway.save(userDomain);
+        return user;
     }
 
 }

@@ -16,7 +16,7 @@ public record RegisterUserRequest(
         String email,
 
         @NotBlank
-        @Size(min = 8)
+        @Size(min = 8, message = "Password must contain at least 8 characters.")
         String password,
         
         @NotNull

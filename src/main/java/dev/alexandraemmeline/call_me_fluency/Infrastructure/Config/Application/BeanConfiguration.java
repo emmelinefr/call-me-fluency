@@ -1,9 +1,13 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Config.Application;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Gateway.AuthenticationGateway;
+import dev.alexandraemmeline.call_me_fluency.Core.Gateway.PracticeScheduleRepositoryGateway;
 import dev.alexandraemmeline.call_me_fluency.Core.Gateway.TokenProviderGateway;
 import dev.alexandraemmeline.call_me_fluency.Core.Gateway.UserRepositoryGateway;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.*;
+import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSchedule.CreatePracticeScheduleUseCase;
+import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSchedule.CreatePracticeScheduleUseCaseImpl;
+import dev.alexandraemmeline.call_me_fluency.Core.UseCases.User.*;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.PracticeSchedule.PracticeScheduleRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class BeanConfiguration {
 
+    //USER
     @Bean
     public RegisterUserUseCase createUserUseCase(UserRepositoryGateway userRepositoryGateway, PasswordEncoder passwordEncoder) {
         return new RegisterUserUseCaseImpl(userRepositoryGateway,passwordEncoder);
@@ -46,4 +51,11 @@ public class BeanConfiguration {
         return new PromoteUserToAdminUseCaseImpl(userRepositoryGateway);
     }
 
+
+
+    //PRACTICE SCHEDULE
+    @Bean
+    public CreatePracticeScheduleUseCase createPracticeScheduleUseCase(PracticeScheduleRepositoryGateway practiceScheduleRepositoryGateway) {
+        return new CreatePracticeScheduleUseCaseImpl(practiceScheduleRepositoryGateway);
+    }
 }

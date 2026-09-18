@@ -1,4 +1,4 @@
-package dev.alexandraemmeline.call_me_fluency.Core.UseCases;
+package dev.alexandraemmeline.call_me_fluency.Core.UseCases.User;
 
 public interface DeleteUserUseCase {
 

@@ -1,7 +1,7 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Controllers;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.*;
+import dev.alexandraemmeline.call_me_fluency.Core.UseCases.User.*;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.User.ChangePasswordRequest;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.User.DeleteUserRequest;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.User.UserResponse;

@@ -1,7 +1,6 @@
-package dev.alexandraemmeline.call_me_fluency.Core.UseCases;
+package dev.alexandraemmeline.call_me_fluency.Core.UseCases.User;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
-import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.InvalidCredentialsException;
 import dev.alexandraemmeline.call_me_fluency.Core.Gateway.AuthenticationGateway;
 import dev.alexandraemmeline.call_me_fluency.Core.Gateway.TokenProviderGateway;
 
