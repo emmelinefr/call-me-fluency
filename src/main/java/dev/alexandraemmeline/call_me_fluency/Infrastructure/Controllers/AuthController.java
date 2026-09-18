@@ -36,7 +36,6 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<SuccessResponse<UserResponse>> register(@RequestBody @Valid RegisterUserRequest registerUserRequest) {
 
-        System.out.println(">>> CHEGOU NO REGISTER");
         UserDomain userToCreate = userMapper.toDomain(registerUserRequest);
         UserDomain createdUser = registerUserUseCase.execute(userToCreate);
 
