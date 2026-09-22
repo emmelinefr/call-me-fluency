@@ -155,4 +155,18 @@ public class GlobalExceptionHandler {
                 .body(response);
     }
 
+    @ExceptionHandler(PracticeScheduleAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> practiceScheduleAlreadyDayException(PracticeScheduleAlreadyExistsException ex) {
+
+        ErrorResponse response = new ErrorResponse(
+                false,
+                ex.getMessage(),
+                List.of(ex.getMessage()),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.badRequest()
+                .body(response);
+    }
+
 }

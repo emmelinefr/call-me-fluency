@@ -38,7 +38,7 @@ public class PracticeScheduleController {
         String email = authentication.getName();
 
         UserDomain user = findUserByEmailUseCase.execute(email);
-        Set<PracticeDayDomain> practiceDays = practiceScheduleMapper.toPracticeDayDomain(createPracticeScheduleRequest.practiceDays());
+        Set<PracticeDayDomain> practiceDays = practiceScheduleMapper.toPracticeDaysDomain(createPracticeScheduleRequest.practiceDays());
 
         PracticeScheduleDomain practiceScheduleDomain = createPracticeScheduleUseCase.execute(user, practiceDays);
 

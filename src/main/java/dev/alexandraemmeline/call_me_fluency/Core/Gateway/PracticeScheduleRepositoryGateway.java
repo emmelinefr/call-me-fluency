@@ -6,4 +6,6 @@ public interface PracticeScheduleRepositoryGateway {
 
     PracticeScheduleDomain save(PracticeScheduleDomain practiceScheduleDomain);
 
+    boolean existsByUserId(Long id);
+
 }
