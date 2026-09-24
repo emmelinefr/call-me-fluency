@@ -9,6 +9,8 @@ import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.Practice
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 @RequiredArgsConstructor
 public class PracticeScheduleRepositoryGatewayImpl implements PracticeScheduleRepositoryGateway {
@@ -30,5 +32,13 @@ public class PracticeScheduleRepositoryGatewayImpl implements PracticeScheduleRe
     @Override
     public boolean existsByUserId(Long id) {
         return practiceScheduleRepository.existsByUserId(id);
+    }
+
+    @Override
+    public Optional<PracticeScheduleDomain> findByUserId(Long id) {
+
+        return practiceScheduleRepository
+                .findByUserId(id)
+                .map(practiceScheduleMapper::toDomain);
     }
 }

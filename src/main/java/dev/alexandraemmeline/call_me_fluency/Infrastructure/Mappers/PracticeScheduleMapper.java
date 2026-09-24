@@ -2,18 +2,17 @@ package dev.alexandraemmeline.call_me_fluency.Infrastructure.Mappers;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.PracticeDayDomain;
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.PracticeScheduleDomain;
-import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.PracticeSchedule.CreatePracticeDayRequest;
+import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.PracticeSchedule.CreatePracticeScheduleRequest;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.PracticeSchedule.PracticeScheduleResponse;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.PracticeSchedule.UpdatePracticeScheduleRequest;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.PracticeSchedule.PracticeDayEntity;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.PracticeSchedule.PracticeScheduleEntity;
-import org.mapstruct.AfterMapping;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.User.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Mapper(
         componentModel = "spring",
@@ -24,28 +23,49 @@ import java.util.Set;
 )
 public interface PracticeScheduleMapper {
 
-    PracticeScheduleDomain toDomain(CreatePracticeScheduleRequest createPracticeScheduleRequest);
+    //create request -> domain
+    PracticeScheduleDomain toDomain(
+            CreatePracticeScheduleRequest createPracticeScheduleRequest
+    );
 
-    PracticeScheduleDomain toDomain(UpdatePracticeScheduleRequest updatePracticeScheduleRequest);
+    //update request -> domain
+    PracticeScheduleDomain toDomain(
+            UpdatePracticeScheduleRequest updatePracticeScheduleRequest
+    );
 
+    //domain -> Response
+    PracticeScheduleResponse toResponse(
+            PracticeScheduleDomain practiceScheduleDomain
+    );
 
-    PracticeScheduleResponse toResponse(PracticeScheduleDomain practiceScheduleDomain);
-
-
+    //domain -> entity
     @Mapping(source = "userDomain", target = "user")
     PracticeScheduleEntity toEntity(PracticeScheduleDomain practiceScheduleDomain);
 
-    @Mapping(source = "user", target = "userDomain")
-    @Mapping(target = "practiceDays", ignore = true)
-    PracticeScheduleDomain toDomain(PracticeScheduleEntity practiceScheduleEntity);
+    //entity -> domain
+    default PracticeScheduleDomain toDomain(
+            PracticeScheduleEntity practiceScheduleEntity
+    ) {
 
-    @AfterMapping
-    default void mapPracticeDays(PracticeScheduleEntity entity, @MappingTarget PracticeScheduleDomain domain) {
-        entity.getPracticeDays()
-                .forEach(dayEntity -> domain.addPracticeDay(toDomain(dayEntity)));
+        Set<PracticeDayDomain> practiceDaysDomain =
+                practiceScheduleEntity.getPracticeDays()
+                    .stream()
+                    .map(this::toDomain)
+                    .collect(Collectors.toSet());
+
+        return PracticeScheduleDomain.reconstitute(
+                practiceScheduleEntity.getId(),
+                toDomain(practiceScheduleEntity.getUser()),
+                practiceDaysDomain,
+                practiceScheduleEntity.isActive()
+        );
+
     }
+
+    //auxiliaries
     PracticeDayDomain toDomain(PracticeDayEntity practiceDayEntity);
 
+    UserDomain toDomain(UserEntity userEntity);
 
-    Set<PracticeDayDomain> toPracticeDaysDomain(Set<CreatePracticeDayRequest> practiceDayRequestSet);
+
 }

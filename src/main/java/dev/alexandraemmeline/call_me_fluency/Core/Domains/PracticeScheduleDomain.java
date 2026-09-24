@@ -24,6 +24,18 @@ public class PracticeScheduleDomain {
         this.active = true;
     }
 
+    //reconstitute constructor
+    public static PracticeScheduleDomain reconstitute(Long id, UserDomain userDomain, Set<PracticeDayDomain> practiceDays, boolean active) {
+
+        PracticeScheduleDomain domain = new PracticeScheduleDomain(userDomain);
+
+        domain.id = Objects.requireNonNull(id, "Id cannot be null.");
+        domain.practiceDays.addAll(Objects.requireNonNull(practiceDays, "Practice days cannot be null."));
+        domain.active = active;
+
+        return domain;
+    }
+
     //getters
     public Long getId() {
         return id;

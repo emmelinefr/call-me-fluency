@@ -169,4 +169,18 @@ public class GlobalExceptionHandler {
                 .body(response);
     }
 
+    @ExceptionHandler(PracticeScheduleNotFoundException.class)
+    public ResponseEntity<ErrorResponse> practiceScheduleNotFoundException(PracticeScheduleNotFoundException ex) {
+
+        ErrorResponse response = new ErrorResponse(
+                false,
+                ex.getMessage(),
+                List.of(ex.getMessage()),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.badRequest()
+                .body(response);
+    }
+
 }

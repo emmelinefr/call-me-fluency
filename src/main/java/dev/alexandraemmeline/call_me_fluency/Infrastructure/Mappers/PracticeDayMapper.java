@@ -6,14 +6,29 @@ import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.Practice
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 
+import java.util.Set;
+
 @Mapper(componentModel = "spring")
 public interface PracticeDayMapper {
 
-    PracticeDayDomain toDomain(CreatePracticeDayRequest createPracticeDayRequest);
+    //create request -> domain
+    PracticeDayDomain toDomain(
+            CreatePracticeDayRequest createPracticeDayRequest
+    );
 
-    PracticeDayEntity toEntity(PracticeDayDomain practiceDayDomain);
+    //set<createpracticedayrequest> -> set<practicedaydomain>
+    Set<PracticeDayDomain> toDomain(
+            Set<CreatePracticeDayRequest> createPracticeDayRequestSet
+    );
 
-    @InheritInverseConfiguration
-    PracticeDayDomain toDomain(PracticeDayEntity practiceDayEntity);
+    //domain -> entity
+    PracticeDayEntity toEntity(
+            PracticeDayDomain practiceDayDomain
+    );
+
+    //practice day -> domain
+    PracticeDayDomain toDomain(
+            PracticeDayEntity practiceDayEntity
+    );
 
 }
