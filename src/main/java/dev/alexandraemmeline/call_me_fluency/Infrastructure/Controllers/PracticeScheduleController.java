@@ -1,13 +1,16 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Controllers;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.PracticeDayDomain;
+import dev.alexandraemmeline.call_me_fluency.Core.Domains.PracticeDayKey;
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.PracticeScheduleDomain;
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSchedule.CreatePracticeScheduleUseCase;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSchedule.FindPracticeScheduleByUserIdUseCase;
+import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSchedule.UpdatePracticeScheduleUseCase;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.User.FindUserByEmailUseCase;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.PracticeSchedule.CreatePracticeScheduleRequest;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.PracticeSchedule.PracticeScheduleResponse;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.PracticeSchedule.UpdatePracticeScheduleRequest;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Handler.SuccessResponse;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Mappers.PracticeDayMapper;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Mappers.PracticeScheduleMapper;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("v1/schedule")
@@ -31,6 +35,7 @@ public class PracticeScheduleController {
     private final CreatePracticeScheduleUseCase createPracticeScheduleUseCase;
     private final FindUserByEmailUseCase findUserByEmailUseCase;
     private final FindPracticeScheduleByUserIdUseCase findPracticeScheduleByUserIdUseCase;
+    private final UpdatePracticeScheduleUseCase updatePracticeScheduleUseCase;
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @PostMapping
@@ -95,6 +100,87 @@ public class PracticeScheduleController {
         );
 
         return ResponseEntity.ok(response);
+    }
+
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PatchMapping
+    public ResponseEntity<SuccessResponse<PracticeScheduleResponse>> update(@Valid @RequestBody UpdatePracticeScheduleRequest updatePracticeScheduleRequest, Authentication authentication) {
+
+        String email = authentication.getName();
+        UserDomain user = findUserByEmailUseCase.execute(email);
+
+
+        Set<PracticeDayDomain> daysToAdd =
+                updatePracticeScheduleRequest.practiceDaysToAdd()
+                        .stream()
+                        .map(practiceDayMapper::toDomain)
+                        .collect(Collectors.toSet());
+
+        Set<PracticeDayKey> daysToRemove =
+                updatePracticeScheduleRequest.practiceDaysToRemove()
+                        .stream()
+                        .map(practiceDayMapper::toKey)
+                        .collect(Collectors.toSet());
+
+
+        PracticeScheduleDomain practiceScheduleDomain =
+                updatePracticeScheduleUseCase.execute(
+                    user.getId(),
+                    updatePracticeScheduleRequest.active(),
+                    daysToAdd,
+                    daysToRemove
+        );
+
+
+        PracticeScheduleResponse practiceScheduleResponse = practiceScheduleMapper.toResponse(practiceScheduleDomain);
+
+        SuccessResponse<PracticeScheduleResponse> response = new SuccessResponse<>(
+                true,
+                "Practice Schedule successfully updated.",
+                practiceScheduleResponse,
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PatchMapping("/{userId}")
+    public ResponseEntity<SuccessResponse<PracticeScheduleResponse>> update(@Valid @PathVariable Long userId, @RequestBody UpdatePracticeScheduleRequest updatePracticeScheduleRequest) {
+
+        Set<PracticeDayDomain> daysToAdd =
+                updatePracticeScheduleRequest.practiceDaysToAdd()
+                        .stream()
+                        .map(practiceDayMapper::toDomain)
+                        .collect(Collectors.toSet());
+
+        Set<PracticeDayKey> daysToRemove =
+                updatePracticeScheduleRequest.practiceDaysToRemove()
+                        .stream()
+                        .map(practiceDayMapper::toKey)
+                        .collect(Collectors.toSet());
+
+        PracticeScheduleDomain practiceScheduleDomain =
+                updatePracticeScheduleUseCase.execute(
+                        userId,
+                        updatePracticeScheduleRequest.active(),
+                        daysToAdd,
+                        daysToRemove
+                );
+
+        PracticeScheduleResponse practiceScheduleResponse =
+                practiceScheduleMapper.toResponse(practiceScheduleDomain);
+
+
+        SuccessResponse response = new SuccessResponse<>(
+                true,
+                "Practice Schedule successfully updated.",
+                practiceScheduleResponse,
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.ok(response);
+
     }
 
 }
