@@ -1,12 +1,11 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.PracticeSchedule;
 
 
+import dev.alexandraemmeline.call_me_fluency.Core.Enums.DayOfWeek;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.DayOfWeek;
 import java.time.LocalTime;
 
 @Embeddable
