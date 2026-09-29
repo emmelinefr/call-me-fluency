@@ -4,10 +4,7 @@ import dev.alexandraemmeline.call_me_fluency.Core.Gateway.AuthenticationGateway;
 import dev.alexandraemmeline.call_me_fluency.Core.Gateway.PracticeScheduleRepositoryGateway;
 import dev.alexandraemmeline.call_me_fluency.Core.Gateway.TokenProviderGateway;
 import dev.alexandraemmeline.call_me_fluency.Core.Gateway.UserRepositoryGateway;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSchedule.CreatePracticeScheduleUseCase;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSchedule.CreatePracticeScheduleUseCaseImpl;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSchedule.FindPracticeScheduleByUserIdUseCase;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSchedule.FindPracticeScheduleByUserIdUseCaseImpl;
+import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSchedule.*;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.User.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -63,5 +60,10 @@ public class BeanConfiguration {
     @Bean
     public FindPracticeScheduleByUserIdUseCase findPracticeScheduleByIdUseCase(PracticeScheduleRepositoryGateway practiceScheduleRepositoryGateway) {
         return new FindPracticeScheduleByUserIdUseCaseImpl(practiceScheduleRepositoryGateway);
+    }
+
+    @Bean
+    public UpdatePracticeScheduleUseCase updatePracticeScheduleUseCase(PracticeScheduleRepositoryGateway practiceScheduleRepositoryGateway) {
+        return new UpdatePracticeScheduleUseCaseImpl((practiceScheduleRepositoryGateway));
     }
 }
