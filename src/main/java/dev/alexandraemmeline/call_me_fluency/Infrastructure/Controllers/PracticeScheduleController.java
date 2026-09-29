@@ -28,7 +28,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("v1/schedule")
+@RequestMapping("v1/practice-schedules")
 @RequiredArgsConstructor
 public class PracticeScheduleController {
 
@@ -40,7 +40,7 @@ public class PracticeScheduleController {
     private final UpdatePracticeScheduleUseCase updatePracticeScheduleUseCase;
     private final DeletePracticeScheduleUseCase deletePracticeScheduleUseCase;
 
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     @Transactional
     @PostMapping
     public ResponseEntity<SuccessResponse<PracticeScheduleResponse>> create(@Valid @RequestBody CreatePracticeScheduleRequest createPracticeScheduleRequest, Authentication authentication) {
@@ -66,7 +66,7 @@ public class PracticeScheduleController {
     }
 
 
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     @GetMapping
     public ResponseEntity<SuccessResponse<PracticeScheduleResponse>> getMySchedule(Authentication authentication) {
 
@@ -89,8 +89,8 @@ public class PracticeScheduleController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/{userId}")
-    public ResponseEntity<SuccessResponse<PracticeScheduleResponse>> getPracticeScheduleByUserId(@PathVariable Long userId) {
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<SuccessResponse<PracticeScheduleResponse>> getUserSchedule(@PathVariable Long userId) {
 
         PracticeScheduleDomain practiceScheduleDomain = findPracticeScheduleByUserIdUseCase.execute(userId);
 
@@ -106,10 +106,10 @@ public class PracticeScheduleController {
         return ResponseEntity.ok(response);
     }
 
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     @Transactional
     @PatchMapping
-    public ResponseEntity<SuccessResponse<PracticeScheduleResponse>> update(@Valid @RequestBody UpdatePracticeScheduleRequest updatePracticeScheduleRequest, Authentication authentication) {
+    public ResponseEntity<SuccessResponse<PracticeScheduleResponse>> updateMySchedule(@Valid @RequestBody UpdatePracticeScheduleRequest updatePracticeScheduleRequest, Authentication authentication) {
 
         String email = authentication.getName();
         UserDomain user = findUserByEmailUseCase.execute(email);
@@ -151,8 +151,8 @@ public class PracticeScheduleController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @Transactional
-    @PatchMapping("/{userId}")
-    public ResponseEntity<SuccessResponse<PracticeScheduleResponse>> update(@Valid @PathVariable Long userId, @RequestBody UpdatePracticeScheduleRequest updatePracticeScheduleRequest) {
+    @PatchMapping("/users/{userId}")
+    public ResponseEntity<SuccessResponse<PracticeScheduleResponse>> updateUserSchedule(@Valid @PathVariable Long userId, @RequestBody UpdatePracticeScheduleRequest updatePracticeScheduleRequest) {
 
         Set<PracticeDayDomain> daysToAdd =
                 updatePracticeScheduleRequest.practiceDaysToAdd()
@@ -190,10 +190,10 @@ public class PracticeScheduleController {
     }
 
 
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     @Transactional
     @DeleteMapping
-    public ResponseEntity<SuccessResponse> delete(Authentication authentication) {
+    public ResponseEntity<SuccessResponse> deleteMySchedule(Authentication authentication) {
 
         String email = authentication.getName();
         UserDomain user = findUserByEmailUseCase.execute(email);
@@ -213,8 +213,8 @@ public class PracticeScheduleController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @Transactional
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<SuccessResponse> delete(@PathVariable Long userId) {
+    @DeleteMapping("/users/{userId}")
+    public ResponseEntity<SuccessResponse> deleteUserSchedule(@PathVariable Long userId) {
 
         deletePracticeScheduleUseCase.execute(userId);
 

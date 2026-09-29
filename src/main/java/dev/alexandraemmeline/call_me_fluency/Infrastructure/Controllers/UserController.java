@@ -30,10 +30,10 @@ public class UserController {
     private final PromoteUserToAdminUseCase promoteUserToAdminUseCase;
 
 
-    @PreAuthorize("hasRole('ADMIN') or #deleteUserRequest.email == authentication.principal.username")
+    @PreAuthorize("#deleteUserRequest.email() == authentication.name")
     @Transactional
-    @DeleteMapping
-    public ResponseEntity<SuccessResponse> delete(@RequestBody @Valid DeleteUserRequest deleteUserRequest) {
+    @DeleteMapping("/me")
+    public ResponseEntity<SuccessResponse> deleteMe(@RequestBody @Valid DeleteUserRequest deleteUserRequest) {
         deleteUserUseCase.execute(deleteUserRequest.email(), deleteUserRequest.password());
 
         SuccessResponse response = new SuccessResponse<>(
@@ -67,7 +67,7 @@ public class UserController {
 
     }
 
-    @PreAuthorize("hasRole('ADMIN') or #email == authentication.principal.username")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/email/{email}")
     public ResponseEntity<SuccessResponse<UserResponse>> findByEmail(@PathVariable String email) {
 
@@ -86,10 +86,10 @@ public class UserController {
 
     }
 
-    @PreAuthorize("hasRole('ADMIN') or #changePasswordRequest.email == authentication.principal.username")
+    @PreAuthorize("#changePasswordRequest.email() == authentication.name")
     @Transactional
     @PatchMapping("/me/password")
-    public ResponseEntity<SuccessResponse<Void>> changePassword(@RequestBody @Valid ChangePasswordRequest changePasswordRequest) {
+    public ResponseEntity<SuccessResponse<Void>> changeMyPassword(@RequestBody @Valid ChangePasswordRequest changePasswordRequest) {
 
         changePasswordUseCase.execute(changePasswordRequest.email(), changePasswordRequest.currentPassword(), changePasswordRequest.newPassword());
 
@@ -106,8 +106,8 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @Transactional
-    @PatchMapping("{id}/promote")
-    public ResponseEntity<SuccessResponse> promoteToAdmin(@PathVariable Long id) {
+    @PatchMapping("{id}/role")
+    public ResponseEntity<SuccessResponse> updateRole(@PathVariable Long id) {
 
         promoteUserToAdminUseCase.execute(id);
 
