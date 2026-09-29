@@ -1,8 +1,8 @@
 package dev.alexandraemmeline.call_me_fluency.Core.Domains;
 
+import dev.alexandraemmeline.call_me_fluency.Core.Enums.DayOfWeek;
 import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.InvalidPracticeDayDurationException;
 
-import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.Objects;
 

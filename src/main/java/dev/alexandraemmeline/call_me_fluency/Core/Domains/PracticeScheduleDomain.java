@@ -2,7 +2,7 @@ package dev.alexandraemmeline.call_me_fluency.Core.Domains;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.DuplicatePracticeDayException;
 
-import java.time.DayOfWeek;
+import dev.alexandraemmeline.call_me_fluency.Core.Enums.DayOfWeek;
 import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Objects;
