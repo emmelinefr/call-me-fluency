@@ -5,7 +5,6 @@ import dev.alexandraemmeline.call_me_fluency.Core.Domains.PracticeScheduleDomain
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.PracticeSchedule.CreatePracticeScheduleRequest;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.PracticeSchedule.PracticeScheduleResponse;
-import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.PracticeSchedule.UpdatePracticeScheduleRequest;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.PracticeSchedule.PracticeDayEntity;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.PracticeSchedule.PracticeScheduleEntity;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.User.UserEntity;
@@ -28,10 +27,6 @@ public interface PracticeScheduleMapper {
             CreatePracticeScheduleRequest createPracticeScheduleRequest
     );
 
-    //update request -> domain
-    PracticeScheduleDomain toDomain(
-            UpdatePracticeScheduleRequest updatePracticeScheduleRequest
-    );
 
     //domain -> Response
     PracticeScheduleResponse toResponse(
