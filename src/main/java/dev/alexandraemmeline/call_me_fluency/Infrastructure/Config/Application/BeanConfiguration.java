@@ -66,4 +66,9 @@ public class BeanConfiguration {
     public UpdatePracticeScheduleUseCase updatePracticeScheduleUseCase(PracticeScheduleRepositoryGateway practiceScheduleRepositoryGateway) {
         return new UpdatePracticeScheduleUseCaseImpl((practiceScheduleRepositoryGateway));
     }
+
+    @Bean
+    public DeletePracticeScheduleUseCase deletePracticeScheduleUseCase(PracticeScheduleRepositoryGateway practiceScheduleRepositoryGateway) {
+        return new DeletePracticeScheduleUseCaseImpl(practiceScheduleRepositoryGateway);
+    }
 }

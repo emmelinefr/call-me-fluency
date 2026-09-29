@@ -41,4 +41,10 @@ public class PracticeScheduleRepositoryGatewayImpl implements PracticeScheduleRe
                 .findByUserId(id)
                 .map(practiceScheduleMapper::toDomain);
     }
+
+
+    @Override
+    public void deleteByUserId(Long userId) {
+        practiceScheduleRepository.deleteByUserId(userId);
+    }
 }

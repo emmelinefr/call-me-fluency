@@ -5,6 +5,7 @@ import dev.alexandraemmeline.call_me_fluency.Core.Domains.PracticeDayKey;
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.PracticeScheduleDomain;
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSchedule.CreatePracticeScheduleUseCase;
+import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSchedule.DeletePracticeScheduleUseCase;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSchedule.FindPracticeScheduleByUserIdUseCase;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSchedule.UpdatePracticeScheduleUseCase;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.User.FindUserByEmailUseCase;
@@ -14,6 +15,7 @@ import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.PracticeSchedul
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Handler.SuccessResponse;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Mappers.PracticeDayMapper;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Mappers.PracticeScheduleMapper;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -36,8 +38,10 @@ public class PracticeScheduleController {
     private final FindUserByEmailUseCase findUserByEmailUseCase;
     private final FindPracticeScheduleByUserIdUseCase findPracticeScheduleByUserIdUseCase;
     private final UpdatePracticeScheduleUseCase updatePracticeScheduleUseCase;
+    private final DeletePracticeScheduleUseCase deletePracticeScheduleUseCase;
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @Transactional
     @PostMapping
     public ResponseEntity<SuccessResponse<PracticeScheduleResponse>> create(@Valid @RequestBody CreatePracticeScheduleRequest createPracticeScheduleRequest, Authentication authentication) {
 
@@ -103,6 +107,7 @@ public class PracticeScheduleController {
     }
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @Transactional
     @PatchMapping
     public ResponseEntity<SuccessResponse<PracticeScheduleResponse>> update(@Valid @RequestBody UpdatePracticeScheduleRequest updatePracticeScheduleRequest, Authentication authentication) {
 
@@ -145,6 +150,7 @@ public class PracticeScheduleController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
+    @Transactional
     @PatchMapping("/{userId}")
     public ResponseEntity<SuccessResponse<PracticeScheduleResponse>> update(@Valid @PathVariable Long userId, @RequestBody UpdatePracticeScheduleRequest updatePracticeScheduleRequest) {
 
@@ -181,6 +187,45 @@ public class PracticeScheduleController {
 
         return ResponseEntity.ok(response);
 
+    }
+
+
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @Transactional
+    @DeleteMapping
+    public ResponseEntity<SuccessResponse> delete(Authentication authentication) {
+
+        String email = authentication.getName();
+        UserDomain user = findUserByEmailUseCase.execute(email);
+
+        deletePracticeScheduleUseCase.execute(user.getId());
+
+        SuccessResponse response = new SuccessResponse<>(
+                true,
+                "Practice Schedule successfully deleted.",
+                null,
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @Transactional
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<SuccessResponse> delete(@PathVariable Long userId) {
+
+        deletePracticeScheduleUseCase.execute(userId);
+
+        SuccessResponse response = new SuccessResponse<>(
+                true,
+                "Practice Schedule successfully deleted.",
+                null,
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.ok(response);
     }
 
 }

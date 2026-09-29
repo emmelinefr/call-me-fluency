@@ -7,6 +7,7 @@ import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.User.DeleteUser
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.User.UserResponse;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Handler.SuccessResponse;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Mappers.UserMapper;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -30,12 +31,19 @@ public class UserController {
 
 
     @PreAuthorize("hasRole('ADMIN') or #deleteUserRequest.email == authentication.principal.username")
+    @Transactional
     @DeleteMapping
-    public ResponseEntity<Void> delete(@RequestBody @Valid DeleteUserRequest deleteUserRequest) {
+    public ResponseEntity<SuccessResponse> delete(@RequestBody @Valid DeleteUserRequest deleteUserRequest) {
         deleteUserUseCase.execute(deleteUserRequest.email(), deleteUserRequest.password());
 
-        return ResponseEntity.noContent()
-                .build();
+        SuccessResponse response = new SuccessResponse<>(
+                true,
+                "User successfully deleted.",
+                null,
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.ok(response);
 
     }
 
@@ -79,6 +87,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ADMIN') or #changePasswordRequest.email == authentication.principal.username")
+    @Transactional
     @PatchMapping("/me/password")
     public ResponseEntity<SuccessResponse<Void>> changePassword(@RequestBody @Valid ChangePasswordRequest changePasswordRequest) {
 
@@ -96,6 +105,7 @@ public class UserController {
 
 
     @PreAuthorize("hasRole('ADMIN')")
+    @Transactional
     @PatchMapping("{id}/promote")
     public ResponseEntity<SuccessResponse> promoteToAdmin(@PathVariable Long id) {
 

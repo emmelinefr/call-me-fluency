@@ -9,6 +9,7 @@ import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.User.RegisterUs
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.User.UserResponse;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Handler.SuccessResponse;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Mappers.UserMapper;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +35,7 @@ public class AuthController {
 
 
     @PostMapping("/register")
+    @Transactional
     public ResponseEntity<SuccessResponse<UserResponse>> register(@RequestBody @Valid RegisterUserRequest registerUserRequest) {
 
         UserDomain userToCreate = userMapper.toDomain(registerUserRequest);

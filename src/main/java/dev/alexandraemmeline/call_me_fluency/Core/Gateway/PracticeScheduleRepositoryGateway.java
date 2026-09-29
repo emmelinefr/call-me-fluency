@@ -12,4 +12,6 @@ public interface PracticeScheduleRepositoryGateway {
 
     Optional<PracticeScheduleDomain> findByUserId(Long id);
 
+    void deleteByUserId(Long userId);
+
 }
