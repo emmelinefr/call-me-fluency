@@ -3,6 +3,7 @@ package dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.User;
 import dev.alexandraemmeline.call_me_fluency.Core.Enums.UserLevel;
 import dev.alexandraemmeline.call_me_fluency.Core.Enums.UserStatus;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.PracticeSchedule.PracticeScheduleEntity;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.PracticeSession.PracticeSessionEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
@@ -61,6 +62,14 @@ public class UserEntity {
             cascade = CascadeType.ALL
     )
     private PracticeScheduleEntity practiceScheduleEntity;
+
+
+    //user % practice_session
+    @OneToMany(
+            mappedBy = "user",
+            fetch = FetchType.LAZY
+    )
+    private Set<PracticeSessionEntity> practiceSessions = new HashSet<>();
 
 }
 
