@@ -2,9 +2,7 @@ package dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.Practic
 
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.User.UserEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
@@ -12,7 +10,8 @@ import java.util.Set;
 @Table(name = "practice_schedule")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class PracticeScheduleEntity {
 
     @Id
