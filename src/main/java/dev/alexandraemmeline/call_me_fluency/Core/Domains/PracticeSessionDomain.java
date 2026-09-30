@@ -1,0 +1,103 @@
+package dev.alexandraemmeline.call_me_fluency.Core.Domains;
+
+import dev.alexandraemmeline.call_me_fluency.Core.Enums.PracticeSessionStatus;
+import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.InvalidPracticeSessionStateException;
+
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.Objects;
+
+public class PracticeSessionDomain {
+
+    private Long id;
+    private UserDomain user;
+    private LocalDateTime scheduledAt;
+    private LocalDateTime startedAt;
+    private LocalDateTime endedAt;
+    private PracticeSessionStatus status;
+
+
+    //constructor and its validations
+    public PracticeSessionDomain(UserDomain user, LocalDateTime scheduledAt) {
+        this.user = Objects.requireNonNull(user, "User cannot be null");
+        this.scheduledAt = Objects.requireNonNull(scheduledAt, "Scheduled time cannot be null");
+        this.status = PracticeSessionStatus.SCHEDULED;
+    }
+
+
+
+    //getters
+    public Long getId() {
+        return id;
+    }
+
+    public UserDomain getUser() {
+        return user;
+    }
+
+    public LocalDateTime getScheduledAt() {
+        return scheduledAt;
+    }
+
+    public LocalDateTime getStartedAt() {
+        return startedAt;
+    }
+
+    public LocalDateTime getEndedAt() {
+        return endedAt;
+    }
+
+    public Long getDurationInMinutes() {
+        if (startedAt == null || endedAt == null) {
+            return null;
+        }
+
+        return ChronoUnit.MINUTES.between(startedAt, endedAt);
+    }
+
+    public PracticeSessionStatus getStatus() {
+        return status;
+    }
+
+
+
+    //behaviors
+    //start
+    public void startSession() {
+        if (status != PracticeSessionStatus.SCHEDULED) {
+            throw new InvalidPracticeSessionStateException(
+                    "Practice session cannot be started."
+            );
+        }
+
+        this.startedAt = LocalDateTime.now();
+        this.status = PracticeSessionStatus.IN_PROGRESS;
+
+    }
+
+    //finish
+    public void finishSession() {
+        if (status != PracticeSessionStatus.IN_PROGRESS) {
+            throw new InvalidPracticeSessionStateException(
+                    "Practice session cannot be finished."
+            );
+        }
+
+        this.endedAt = LocalDateTime.now();
+        this.status = PracticeSessionStatus.COMPLETED;
+
+    }
+
+    //cancel
+    public void cancelSession() {
+        if (status != PracticeSessionStatus.SCHEDULED) {
+            throw new InvalidPracticeSessionStateException(
+                    "Practice session cannot be canceled."
+            );
+        }
+
+        this.status = PracticeSessionStatus.CANCELED;
+
+    }
+
+}
