@@ -1,10 +1,11 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Config.Application;
 
-import dev.alexandraemmeline.call_me_fluency.Core.Gateway.AuthenticationGateway;
-import dev.alexandraemmeline.call_me_fluency.Core.Gateway.PracticeScheduleRepositoryGateway;
-import dev.alexandraemmeline.call_me_fluency.Core.Gateway.TokenProviderGateway;
-import dev.alexandraemmeline.call_me_fluency.Core.Gateway.UserRepositoryGateway;
+import dev.alexandraemmeline.call_me_fluency.Core.Gateway.*;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSchedule.*;
+import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSession.CreatePracticeSessionUseCase;
+import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSession.CreatePracticeSessionUseCaseImpl;
+import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSession.StartPracticeSessionUseCase;
+import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSession.StartPracticeSessionUseCaseImpl;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.User.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -70,5 +71,18 @@ public class BeanConfiguration {
     @Bean
     public DeletePracticeScheduleUseCase deletePracticeScheduleUseCase(PracticeScheduleRepositoryGateway practiceScheduleRepositoryGateway) {
         return new DeletePracticeScheduleUseCaseImpl(practiceScheduleRepositoryGateway);
+    }
+
+
+
+    //PRACTICE SESSION
+    @Bean
+    public CreatePracticeSessionUseCase createPracticeScheduleUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway, UserRepositoryGateway userRepositoryGateway, PracticeScheduleRepositoryGateway practiceScheduleRepositoryGateway) {
+        return new CreatePracticeSessionUseCaseImpl(practiceSessionRepositoryGateway, userRepositoryGateway, practiceScheduleRepositoryGateway);
+    }
+
+    @Bean
+    public StartPracticeSessionUseCase startPracticeSessionUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
+        return new StartPracticeSessionUseCaseImpl(practiceSessionRepositoryGateway);
     }
 }
