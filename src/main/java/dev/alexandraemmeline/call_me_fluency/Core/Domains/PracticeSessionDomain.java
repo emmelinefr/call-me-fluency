@@ -15,16 +15,32 @@ public class PracticeSessionDomain {
     private LocalDateTime startedAt;
     private LocalDateTime endedAt;
     private PracticeSessionStatus status;
+    private PracticeScheduleDomain practiceSchedule;
 
 
     //constructor and its validations
-    public PracticeSessionDomain(UserDomain user, LocalDateTime scheduledAt) {
+    public PracticeSessionDomain(UserDomain user, LocalDateTime scheduledAt, PracticeScheduleDomain practiceSchedule) {
         this.user = Objects.requireNonNull(user, "User cannot be null");
         this.scheduledAt = Objects.requireNonNull(scheduledAt, "Scheduled time cannot be null");
         this.status = PracticeSessionStatus.SCHEDULED;
+        this.practiceSchedule = Objects.requireNonNull(practiceSchedule, "Practice schedule cannot be null");
     }
 
+    //reconstitute constructor
+    public static PracticeSessionDomain reconstitute(Long id, UserDomain user, LocalDateTime scheduledAt, LocalDateTime startedAt, LocalDateTime endedAt, PracticeSessionStatus status, PracticeScheduleDomain practiceSchedule) {
 
+        PracticeSessionDomain domain = new PracticeSessionDomain(user, scheduledAt, practiceSchedule);
+
+        domain.id = id;
+        domain.user = Objects.requireNonNull(user, "User cannot be null");
+        domain.practiceSchedule = Objects.requireNonNull(practiceSchedule, "Practice schedule cannot be null");
+        domain.scheduledAt = Objects.requireNonNull(scheduledAt, "Scheduled time cannot be null");
+        domain.startedAt = startedAt;
+        domain.endedAt = endedAt;
+        domain.status = Objects.requireNonNull(status, "Status cannot be null");
+
+        return domain;
+    }
 
     //getters
     public Long getId() {
@@ -59,6 +75,9 @@ public class PracticeSessionDomain {
         return status;
     }
 
+    public PracticeScheduleDomain getPracticeSchedule() {
+        return practiceSchedule;
+    }
 
 
     //behaviors
