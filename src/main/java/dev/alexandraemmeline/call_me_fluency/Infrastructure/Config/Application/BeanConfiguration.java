@@ -97,4 +97,8 @@ public class BeanConfiguration {
     FindPracticeSessionByIdUseCase findPracticeSessionUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
         return new FindPracticeSessionByIdUseCaseImpl(practiceSessionRepositoryGateway);
     }
+
+    @Bean ListPracticeSessionsUseCase listPracticeSessionsUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
+        return new ListPracticeSessionsUseCaseImpl(practiceSessionRepositoryGateway);
+    }
 }

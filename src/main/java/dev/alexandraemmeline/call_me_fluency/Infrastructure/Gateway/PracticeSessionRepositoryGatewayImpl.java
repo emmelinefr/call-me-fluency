@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Component
@@ -36,6 +38,16 @@ public class PracticeSessionRepositoryGatewayImpl implements PracticeSessionRepo
         PracticeSessionEntity practiceSessionSaved = practiceSessionRepository.save(practiceSessionEntity);
 
         return practiceSessionMapper.toDomain(practiceSessionSaved);
+
+    }
+
+    @Override
+    public Set<PracticeSessionDomain> findByUserId(Long userId) {
+
+        return practiceSessionRepository.findByUserId(userId)
+                .stream()
+                .map(practiceSessionMapper::toDomain)
+                .collect(Collectors.toSet());
 
     }
 }
