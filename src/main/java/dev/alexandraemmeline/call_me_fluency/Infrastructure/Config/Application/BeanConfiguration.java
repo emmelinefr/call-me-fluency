@@ -2,10 +2,7 @@ package dev.alexandraemmeline.call_me_fluency.Infrastructure.Config.Application;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Gateway.*;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSchedule.*;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSession.CreatePracticeSessionUseCase;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSession.CreatePracticeSessionUseCaseImpl;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSession.StartPracticeSessionUseCase;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSession.StartPracticeSessionUseCaseImpl;
+import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSession.*;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.User.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -84,5 +81,15 @@ public class BeanConfiguration {
     @Bean
     public StartPracticeSessionUseCase startPracticeSessionUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
         return new StartPracticeSessionUseCaseImpl(practiceSessionRepositoryGateway);
+    }
+
+    @Bean
+    public CancelPracticeSessionUseCase cancelPracticeSessionUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
+        return new CancelPracticeSessionUseCaseImpl(practiceSessionRepositoryGateway);
+    }
+
+    @Bean
+    public FinishPracticeSessionUseCase finishPracticeSessionUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
+        return new FinishPracticeSessionUseCaseImpl(practiceSessionRepositoryGateway);
     }
 }
