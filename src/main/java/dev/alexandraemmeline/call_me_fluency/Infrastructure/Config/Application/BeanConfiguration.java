@@ -92,4 +92,9 @@ public class BeanConfiguration {
     public FinishPracticeSessionUseCase finishPracticeSessionUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
         return new FinishPracticeSessionUseCaseImpl(practiceSessionRepositoryGateway);
     }
+
+    @Bean
+    FindPracticeSessionByIdUseCase findPracticeSessionUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
+        return new FindPracticeSessionByIdUseCaseImpl(practiceSessionRepositoryGateway);
+    }
 }
