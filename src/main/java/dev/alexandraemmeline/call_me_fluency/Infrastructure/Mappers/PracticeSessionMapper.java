@@ -3,6 +3,7 @@ package dev.alexandraemmeline.call_me_fluency.Infrastructure.Mappers;
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.PracticeScheduleDomain;
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.PracticeSessionDomain;
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.PracticeSession.PracticeSessionResponse;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.PracticeSchedule.PracticeScheduleEntity;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.PracticeSession.PracticeSessionEntity;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.User.UserEntity;
@@ -43,5 +44,11 @@ public interface PracticeSessionMapper {
 
     PracticeScheduleDomain toDomain(
             PracticeScheduleEntity practiceScheduleEntity
+    );
+
+
+    // toResponse
+    PracticeSessionResponse toResponse(
+            PracticeSessionDomain practiceSessionDomain
     );
 }
