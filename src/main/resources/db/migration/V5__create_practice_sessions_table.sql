@@ -14,5 +14,9 @@ CREATE TABLE practice_sessions (
     CONSTRAINT fk_practice_sessions_schedule
                                FOREIGN KEY (practice_schedule_id)
                                REFERENCES practice_schedule(id)
+                               ON DELETE CASCADE,
+
+    CONSTRAINT uk_practice_sessions_schedule_scheduled_at
+                               UNIQUE (practice_schedule_id, scheduled_at)
 
 );

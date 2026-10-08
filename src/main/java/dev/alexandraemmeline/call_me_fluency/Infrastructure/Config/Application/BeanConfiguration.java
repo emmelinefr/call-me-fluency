@@ -51,7 +51,7 @@ public class BeanConfiguration {
 
     //PRACTICE SCHEDULE
     @Bean
-    public CreatePracticeScheduleUseCase createPracticeScheduleUseCase(PracticeScheduleRepositoryGateway practiceScheduleRepositoryGateway) {
+    public CreatePracticeScheduleUseCase createPracticeSessionUseCase(PracticeScheduleRepositoryGateway practiceScheduleRepositoryGateway) {
         return new CreatePracticeScheduleUseCaseImpl(practiceScheduleRepositoryGateway);
     }
 
@@ -74,7 +74,7 @@ public class BeanConfiguration {
 
     //PRACTICE SESSION
     @Bean
-    public CreatePracticeSessionUseCase createPracticeScheduleUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway, UserRepositoryGateway userRepositoryGateway, PracticeScheduleRepositoryGateway practiceScheduleRepositoryGateway) {
+    public CreatePracticeSessionUseCase createPracticeSessionUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway, UserRepositoryGateway userRepositoryGateway, PracticeScheduleRepositoryGateway practiceScheduleRepositoryGateway) {
         return new CreatePracticeSessionUseCaseImpl(practiceSessionRepositoryGateway, userRepositoryGateway, practiceScheduleRepositoryGateway);
     }
 

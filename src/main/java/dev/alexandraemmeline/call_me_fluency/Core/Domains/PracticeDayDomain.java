@@ -12,7 +12,7 @@ public class PracticeDayDomain {
 
 
     //constructor and its validations
-    public PracticeDayDomain(DayOfWeek dayOfWeek, LocalTime time, int duration) {
+    public PracticeDayDomain(DayOfWeek dayOfWeek, LocalTime time) {
         this.dayOfWeek = Objects.requireNonNull(dayOfWeek, "Day of week cannot be null.");
         this.time = Objects.requireNonNull(time, "Time cannot be null.");
     }
