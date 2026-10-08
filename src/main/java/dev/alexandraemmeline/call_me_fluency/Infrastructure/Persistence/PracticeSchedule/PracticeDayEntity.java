@@ -21,7 +21,5 @@ public class PracticeDayEntity {
     @Column(nullable = false)
     private LocalTime time;
 
-    @Column(nullable = false)
-    private int duration;
 
 }

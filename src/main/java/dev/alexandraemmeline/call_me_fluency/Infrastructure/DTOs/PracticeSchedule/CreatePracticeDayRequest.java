@@ -11,10 +11,7 @@ public record CreatePracticeDayRequest(
         DayOfWeek dayOfWeek,
 
         @NotNull
-        LocalTime time,
-
-        @NotNull
-        Integer duration
+        LocalTime time
 
 ) {
 }

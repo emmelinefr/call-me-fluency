@@ -127,19 +127,6 @@ public class GlobalExceptionHandler {
                 .body(response);
     }
 
-    @ExceptionHandler(InvalidPracticeDayDurationException.class)
-    public ResponseEntity<ErrorResponse> invalidPracticeDayDurationException(InvalidPracticeDayDurationException ex) {
-
-        ErrorResponse response = new ErrorResponse(
-                false,
-                ex.getMessage(),
-                List.of(ex.getMessage()),
-                LocalDateTime.now()
-        );
-
-        return ResponseEntity.badRequest()
-                .body(response);
-    }
 
     @ExceptionHandler(DuplicatePracticeDayException.class)
     public ResponseEntity<ErrorResponse> duplicatePracticeDayException(DuplicatePracticeDayException ex) {
