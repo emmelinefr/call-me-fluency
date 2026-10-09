@@ -214,7 +214,7 @@ public class PracticeScheduleController {
     @PreAuthorize("hasRole('ADMIN')")
     @Transactional
     @DeleteMapping("/users/{userId}")
-    public ResponseEntity<SuccessResponse> deleteUserSchedule(@PathVariable Long userId) {
+    public ResponseEntity<SuccessResponse> deleteScheduleByUserId(@PathVariable Long userId) {
 
         deletePracticeScheduleUseCase.execute(userId);
 
