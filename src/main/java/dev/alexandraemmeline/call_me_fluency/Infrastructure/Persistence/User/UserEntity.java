@@ -59,7 +59,7 @@ public class UserEntity {
     //user & practice_schedule
     @OneToOne(
             mappedBy = "user",
-            cascade = CascadeType.ALL
+            cascade = CascadeType.REMOVE
     )
     private PracticeScheduleEntity practiceScheduleEntity;
 
