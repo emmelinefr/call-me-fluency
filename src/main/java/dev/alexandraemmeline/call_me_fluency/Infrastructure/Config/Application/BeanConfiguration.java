@@ -51,7 +51,7 @@ public class BeanConfiguration {
 
     //PRACTICE SCHEDULE
     @Bean
-    public CreatePracticeScheduleUseCase createPracticeSessionUseCase(PracticeScheduleRepositoryGateway practiceScheduleRepositoryGateway) {
+    public CreatePracticeScheduleUseCase createPracticeScheduleUseCase(PracticeScheduleRepositoryGateway practiceScheduleRepositoryGateway) {
         return new CreatePracticeScheduleUseCaseImpl(practiceScheduleRepositoryGateway);
     }
 
