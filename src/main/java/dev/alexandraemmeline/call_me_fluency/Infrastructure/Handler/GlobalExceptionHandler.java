@@ -171,7 +171,7 @@ public class GlobalExceptionHandler {
     }
 
 
-    @ExceptionHandler(PracticeScheduleNotFoundException.class)
+    @ExceptionHandler(PracticeSessionNotFoundException.class)
     public ResponseEntity<ErrorResponse> practiceSessionNotFoundException(PracticeSessionNotFoundException ex) {
 
         ErrorResponse response = new ErrorResponse(
