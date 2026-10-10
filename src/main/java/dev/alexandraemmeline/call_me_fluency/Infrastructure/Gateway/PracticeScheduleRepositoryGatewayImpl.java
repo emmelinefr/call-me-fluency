@@ -8,6 +8,7 @@ import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.Practice
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.PracticeSchedule.PracticeScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -44,8 +45,13 @@ public class PracticeScheduleRepositoryGatewayImpl implements PracticeScheduleRe
 
 
     @Override
+    @Transactional
     public void deleteByUserId(Long userId) {
-        practiceScheduleRepository.deleteByUserId(userId);
+
+        practiceScheduleRepository.findByUserId(userId).ifPresent(schedule -> {schedule.getUser().setPracticeScheduleEntity(null);
+
+            practiceScheduleRepository.delete(schedule);
+        });
     }
 
 
