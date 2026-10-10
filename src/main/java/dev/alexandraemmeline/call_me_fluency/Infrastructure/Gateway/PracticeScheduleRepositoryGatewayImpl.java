@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -63,4 +65,12 @@ public class PracticeScheduleRepositoryGatewayImpl implements PracticeScheduleRe
                 .map(practiceScheduleMapper::toDomain);
     }
 
+
+    @Override
+    public Set<PracticeScheduleDomain> findActives() {
+
+        return practiceScheduleRepository.findActives().stream()
+                .map(practiceScheduleMapper::toDomain)
+                .collect(Collectors.toSet());
+    }
 }
