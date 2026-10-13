@@ -4,6 +4,7 @@ import dev.alexandraemmeline.call_me_fluency.Core.Domains.PracticeScheduleDomain
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.PracticeSessionDomain;
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
 import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.PracticeScheduleNotFoundException;
+import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.PracticeSessionAlreadyExistsException;
 import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.UserNotFoundException;
 import dev.alexandraemmeline.call_me_fluency.Core.Gateway.PracticeScheduleRepositoryGateway;
 import dev.alexandraemmeline.call_me_fluency.Core.Gateway.PracticeSessionRepositoryGateway;
@@ -23,6 +24,7 @@ public class CreatePracticeSessionUseCaseImpl implements CreatePracticeSessionUs
         this.practiceScheduleRepositoryGateway = practiceScheduleRepositoryGateway;
     }
 
+    
     @Override
     public PracticeSessionDomain execute(Long userId, LocalDateTime scheduledAt) {
 
@@ -32,6 +34,11 @@ public class CreatePracticeSessionUseCaseImpl implements CreatePracticeSessionUs
 
         PracticeScheduleDomain practiceSchedule = practiceScheduleRepositoryGateway.findByUserId(user.getId())
                 .orElseThrow(() -> new PracticeScheduleNotFoundException());
+
+
+        if (practiceSessionRepositoryGateway.existsByPracticeScheduleIdAndScheduledAt(practiceSchedule.getId(), scheduledAt)) {
+            throw new PracticeSessionAlreadyExistsException();
+        }
 
 
         PracticeSessionDomain practiceSession = new PracticeSessionDomain(

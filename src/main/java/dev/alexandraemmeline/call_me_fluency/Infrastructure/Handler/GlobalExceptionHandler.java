@@ -185,4 +185,18 @@ public class GlobalExceptionHandler {
                 .body(response);
     }
 
+    @ExceptionHandler(PracticeSessionAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> practiceSessionAlreadyExistsException(PracticeSessionAlreadyExistsException ex) {
+
+        ErrorResponse response = new ErrorResponse(
+                false,
+                ex.getMessage(),
+                List.of(ex.getMessage()),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.badRequest()
+                .body(response);
+    }
+
 }
