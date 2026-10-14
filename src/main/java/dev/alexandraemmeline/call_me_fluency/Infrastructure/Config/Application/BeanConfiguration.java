@@ -1,6 +1,7 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Config.Application;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Gateway.*;
+import dev.alexandraemmeline.call_me_fluency.Core.Managers.PracticeSessionManager;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSchedule.*;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSession.*;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.User.*;
@@ -94,11 +95,20 @@ public class BeanConfiguration {
     }
 
     @Bean
-    FindPracticeSessionByIdUseCase findPracticeSessionUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
+    public FindPracticeSessionByIdUseCase findPracticeSessionUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
         return new FindPracticeSessionByIdUseCaseImpl(practiceSessionRepositoryGateway);
     }
 
-    @Bean ListPracticeSessionsUseCase listPracticeSessionsUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
+    @Bean
+    public ListPracticeSessionsUseCase listPracticeSessionsUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
         return new ListPracticeSessionsUseCaseImpl(practiceSessionRepositoryGateway);
     }
+
+
+    //PRACTICE SESSION MANAGER
+    @Bean
+    public PracticeSessionManager practiceSessionManager(FindActivePracticeSchedulesUseCase findActivePracticeSchedulesUseCase, CreatePracticeSessionUseCase createPracticeSessionUseCase) {
+        return new PracticeSessionManager(findActivePracticeSchedulesUseCase, createPracticeSessionUseCase);
+    }
+
 }
