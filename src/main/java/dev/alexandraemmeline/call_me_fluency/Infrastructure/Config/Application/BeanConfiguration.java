@@ -5,6 +5,7 @@ import dev.alexandraemmeline.call_me_fluency.Core.Managers.PracticeSessionManage
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSchedule.*;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSession.*;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.User.*;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.PracticeSchedule.PracticeScheduleRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -69,6 +70,11 @@ public class BeanConfiguration {
     @Bean
     public DeletePracticeScheduleUseCase deletePracticeScheduleUseCase(PracticeScheduleRepositoryGateway practiceScheduleRepositoryGateway) {
         return new DeletePracticeScheduleUseCaseImpl(practiceScheduleRepositoryGateway);
+    }
+
+    @Bean
+    public FindActivePracticeSchedulesUseCase findActivePracticeSchedulesUseCase(PracticeScheduleRepositoryGateway practiceScheduleRepositoryGateway) {
+        return new FindActivePracticeSchedulesUseCaseImpl(practiceScheduleRepositoryGateway);
     }
 
 
