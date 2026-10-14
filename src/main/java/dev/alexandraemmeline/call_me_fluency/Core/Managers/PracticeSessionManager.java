@@ -1,4 +1,4 @@
-package dev.alexandraemmeline.call_me_fluency.Core;
+package dev.alexandraemmeline.call_me_fluency.Core.Managers;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.PracticeScheduleDomain;
 import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.PracticeSessionAlreadyExistsException;
