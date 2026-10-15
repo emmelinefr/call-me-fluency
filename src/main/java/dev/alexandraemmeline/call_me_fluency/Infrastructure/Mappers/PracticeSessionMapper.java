@@ -1,13 +1,10 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Mappers;
 
-import dev.alexandraemmeline.call_me_fluency.Core.Domains.PracticeScheduleDomain;
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.PracticeSessionDomain;
-import dev.alexandraemmeline.call_me_fluency.Core.Domains.UserDomain;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.DTOs.PracticeSession.PracticeSessionResponse;
-import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.PracticeSchedule.PracticeScheduleEntity;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.PracticeSession.PracticeSessionEntity;
-import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.User.UserEntity;
 import org.mapstruct.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(
         componentModel = "spring",
@@ -16,39 +13,33 @@ import org.mapstruct.Mapper;
                 PracticeScheduleMapper.class
         }
 )
-public interface PracticeSessionMapper {
+public abstract class PracticeSessionMapper {
+
+    @Autowired
+    protected UserMapper userMapper;
+    @Autowired
+    protected PracticeScheduleMapper practiceScheduleMapper;
 
     // entity -> domain
-    default PracticeSessionDomain toDomain(
-            PracticeSessionEntity practiceSessionEntity
-    ) {
-
+    public PracticeSessionDomain toDomain(PracticeSessionEntity practiceSessionEntity) {
         return PracticeSessionDomain.reconstitute(
                 practiceSessionEntity.getId(),
-                toDomain(practiceSessionEntity.getUser()),
+                userMapper.toDomain(practiceSessionEntity.getUser()),
                 practiceSessionEntity.getScheduledAt(),
                 practiceSessionEntity.getStartedAt(),
                 practiceSessionEntity.getEndedAt(),
                 practiceSessionEntity.getStatus(),
-                toDomain(practiceSessionEntity.getPracticeSchedule())
+                practiceScheduleMapper.toDomain(practiceSessionEntity.getPracticeSchedule())
         );
     }
 
     // domain -> entity
-    PracticeSessionEntity toEntity(
+    public abstract PracticeSessionEntity toEntity(
             PracticeSessionDomain practiceSessionDomain
     );
 
-    // auxiliaries
-    UserDomain toDomain(UserEntity userEntity);
-
-    PracticeScheduleDomain toDomain(
-            PracticeScheduleEntity practiceScheduleEntity
-    );
-
-
-    // toResponse
-    PracticeSessionResponse toResponse(
+    // domain -> response
+    public abstract PracticeSessionResponse toResponse(
             PracticeSessionDomain practiceSessionDomain
     );
 }
