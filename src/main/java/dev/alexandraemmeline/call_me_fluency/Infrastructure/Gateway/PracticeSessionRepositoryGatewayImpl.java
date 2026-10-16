@@ -57,4 +57,14 @@ public class PracticeSessionRepositoryGatewayImpl implements PracticeSessionRepo
 
         return practiceSessionRepository.existsByPracticeScheduleIdAndScheduledAt(practiceScheduleId, scheduledAt);
     }
+
+
+    @Override
+    public Set<PracticeSessionDomain> findScheduleds() {
+
+        return practiceSessionRepository.findScheduleds()
+                .stream()
+                .map(practiceSessionMapper::toDomain)
+                .collect(Collectors.toSet());
+    }
 }

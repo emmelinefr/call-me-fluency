@@ -1,5 +1,6 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.PracticeSession;
 
+import dev.alexandraemmeline.call_me_fluency.Core.Domains.PracticeSessionDomain;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,4 +25,10 @@ public interface PracticeSessionRepository extends JpaRepository<PracticeSession
             """, nativeQuery = true)
     boolean existsByPracticeScheduleIdAndScheduledAt(@Param("practiceScheduleId") Long practiceScheduleId, @Param("scheduledAt") LocalDateTime scheduledAt);
 
+    @Query(value = """
+            SELECT *
+            FROM practice_sessions
+            WHERE status = 'SCHEDULED'
+            """, nativeQuery = true)
+    Set<PracticeSessionEntity> findScheduleds();
 }

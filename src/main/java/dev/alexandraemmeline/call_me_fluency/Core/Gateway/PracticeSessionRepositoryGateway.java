@@ -16,4 +16,6 @@ public interface PracticeSessionRepositoryGateway {
 
     boolean existsByPracticeScheduleIdAndScheduledAt(Long practiceScheduleId, LocalDateTime scheduledAt);
 
+    Set<PracticeSessionDomain> findScheduleds();
+
 }
