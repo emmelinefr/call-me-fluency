@@ -20,7 +20,7 @@ public class PracticeSessionManager {
     }
 
 
-    public void manageSessions() {
+    public void scheduleSessions() {
 
         Set<PracticeScheduleDomain> activePracticeSchedules = findActivePracticeSchedulesUseCase.execute();
 

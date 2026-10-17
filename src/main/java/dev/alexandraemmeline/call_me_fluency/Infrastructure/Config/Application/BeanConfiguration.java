@@ -110,6 +110,10 @@ public class BeanConfiguration {
         return new ListPracticeSessionsUseCaseImpl(practiceSessionRepositoryGateway);
     }
 
+    @Bean
+    public FindPracticeSessionsScheduledUseCase findPracticeSessionsScheduledUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
+        return new FindPracticeSessionsScheduledUseCaseImpl(practiceSessionRepositoryGateway);
+    }
 
     //PRACTICE SESSION MANAGER
     @Bean

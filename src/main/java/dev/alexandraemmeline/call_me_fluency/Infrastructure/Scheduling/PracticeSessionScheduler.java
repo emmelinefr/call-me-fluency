@@ -16,7 +16,7 @@ public class PracticeSessionScheduler {
 
     @Scheduled(fixedDelay = 60000)
     public void schedulePracticeSessions() {
-        practiceSessionManager.manageSessions();
+        practiceSessionManager.scheduleSessions();
     }
 
 }
