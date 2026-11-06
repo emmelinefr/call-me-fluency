@@ -72,7 +72,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(SamePasswordException.class)
-    public ResponseEntity<ErrorResponse> samePasswordException(InvalidCredentialsException ex) {
+    public ResponseEntity<ErrorResponse> samePasswordException(SamePasswordException ex) {
 
         ErrorResponse response = new ErrorResponse(
                 false,
