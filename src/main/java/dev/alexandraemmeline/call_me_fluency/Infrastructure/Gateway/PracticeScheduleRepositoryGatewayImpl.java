@@ -23,6 +23,7 @@ public class PracticeScheduleRepositoryGatewayImpl implements PracticeScheduleRe
     private final UserMapper userMapper;
 
     @Override
+    @Transactional
     public PracticeScheduleDomain save(PracticeScheduleDomain practiceScheduleDomain) {
 
         PracticeScheduleEntity practiceScheduleSaved = practiceScheduleRepository

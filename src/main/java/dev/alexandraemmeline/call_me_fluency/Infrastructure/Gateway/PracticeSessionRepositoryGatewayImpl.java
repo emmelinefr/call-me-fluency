@@ -7,6 +7,7 @@ import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.Practice
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.PracticeSession.PracticeSessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -32,6 +33,7 @@ public class PracticeSessionRepositoryGatewayImpl implements PracticeSessionRepo
     }
 
     @Override
+    @Transactional
     public PracticeSessionDomain save(PracticeSessionDomain practiceSessionDomain) {
 
         PracticeSessionEntity practiceSessionEntity = practiceSessionMapper.toEntity(practiceSessionDomain);

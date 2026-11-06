@@ -35,7 +35,6 @@ public class AuthController {
 
 
     @PostMapping("/register")
-    @Transactional
     public ResponseEntity<SuccessResponse<UserResponse>> register(@RequestBody @Valid RegisterUserRequest registerUserRequest) {
 
         UserDomain userToCreate = userMapper.toDomain(registerUserRequest);
