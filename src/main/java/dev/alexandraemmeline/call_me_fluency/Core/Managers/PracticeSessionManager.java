@@ -50,6 +50,8 @@ public class PracticeSessionManager {
                     createPracticeSessionUseCase.execute(schedule.getUserDomain().getId(), scheduledAt);
                 } catch (PracticeSessionAlreadyExistsException ex) {
                     //The practice session already exists; Continue processing the remainig practices.
+                } catch (Exception ex) {
+                    System.out.println("Failed to create user session " + schedule.getUserDomain().getId() + " at " + scheduledAt + ". Error: " + ex);
                 }
             });
         });
