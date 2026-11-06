@@ -15,7 +15,7 @@ import java.util.List;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(DomainException.class)
-    public ResponseEntity<ErrorResponse> handleDomainException (DomainException ex) {
+    public ResponseEntity<ErrorResponse> DomainException (DomainException ex) {
 
         ErrorResponse response = new ErrorResponse(
                 false,
@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now()
         );
 
-        return ResponseEntity.badRequest()
+        return ResponseEntity.status(409)
                 .body(response);
     }
 
@@ -53,7 +53,7 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now()
         );
 
-        return ResponseEntity.badRequest()
+        return ResponseEntity.status(404)
                 .body(response);
     }
 
@@ -67,7 +67,7 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now()
         );
 
-        return ResponseEntity.badRequest()
+        return ResponseEntity.status(401)
                 .body(response);
     }
 
@@ -143,7 +143,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(PracticeScheduleAlreadyExistsException.class)
-    public ResponseEntity<ErrorResponse> practiceScheduleAlreadyDayException(PracticeScheduleAlreadyExistsException ex) {
+    public ResponseEntity<ErrorResponse> practiceScheduleAlreadyExistsException(PracticeScheduleAlreadyExistsException ex) {
 
         ErrorResponse response = new ErrorResponse(
                 false,
@@ -166,7 +166,7 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now()
         );
 
-        return ResponseEntity.badRequest()
+        return ResponseEntity.status(404)
                 .body(response);
     }
 
@@ -181,7 +181,7 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now()
         );
 
-        return ResponseEntity.badRequest()
+        return ResponseEntity.status(404)
                 .body(response);
     }
 
