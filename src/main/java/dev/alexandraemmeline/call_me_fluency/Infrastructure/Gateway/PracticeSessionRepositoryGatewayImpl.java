@@ -1,6 +1,7 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Gateway;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.PracticeSessionDomain;
+import dev.alexandraemmeline.call_me_fluency.Core.Enums.PracticeSessionStatus;
 import dev.alexandraemmeline.call_me_fluency.Core.Gateway.PracticeSessionRepositoryGateway;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Mappers.PracticeSessionMapper;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.PracticeSession.PracticeSessionEntity;
@@ -62,9 +63,9 @@ public class PracticeSessionRepositoryGatewayImpl implements PracticeSessionRepo
 
 
     @Override
-    public Set<PracticeSessionDomain> findScheduleds() {
+    public Set<PracticeSessionDomain> findByStatus(PracticeSessionStatus status) {
 
-        return practiceSessionRepository.findScheduleds()
+        return practiceSessionRepository.findByStatus(PracticeSessionStatus.SCHEDULED)
                 .stream()
                 .map(practiceSessionMapper::toDomain)
                 .collect(Collectors.toSet());
