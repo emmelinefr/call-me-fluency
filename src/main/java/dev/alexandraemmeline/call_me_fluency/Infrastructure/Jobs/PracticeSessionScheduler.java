@@ -1,4 +1,4 @@
-package dev.alexandraemmeline.call_me_fluency.Infrastructure.Scheduling;
+package dev.alexandraemmeline.call_me_fluency.Infrastructure.Jobs;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Managers.PracticeSessionManager;
 import org.springframework.scheduling.annotation.Scheduled;
