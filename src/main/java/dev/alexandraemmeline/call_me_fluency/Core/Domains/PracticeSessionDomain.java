@@ -83,7 +83,7 @@ public class PracticeSessionDomain {
     //behaviors
     //start
     public void startSession() {
-        if (status != PracticeSessionStatus.SCHEDULED) {
+        if (status != PracticeSessionStatus.RINGING) {
             throw new InvalidPracticeSessionStateException(
                     "Practice session cannot be started."
             );
