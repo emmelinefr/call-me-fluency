@@ -115,6 +115,16 @@ public class BeanConfiguration {
         return new FindPracticeSessionsScheduledUseCaseImpl(practiceSessionRepositoryGateway);
     }
 
+    @Bean
+    public MarkPracticeSessionAsRingingUseCse markPracticeSessionAsRingingUseCse(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
+        return new MarkPracticeSessionAsRingingUseCseImpl(practiceSessionRepositoryGateway);
+    }
+
+    @Bean
+    public MarkPracticeSessionAsMissedUseCase markPracticeSessionAsMissedUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
+        return new MarkPracticeSessionAsMissedUseCaseImpl(practiceSessionRepositoryGateway);
+    }
+
     //PRACTICE SESSION MANAGER
     @Bean
     public PracticeSessionManager practiceSessionManager(FindActivePracticeSchedulesUseCase findActivePracticeSchedulesUseCase, CreatePracticeSessionUseCase createPracticeSessionUseCase) {
