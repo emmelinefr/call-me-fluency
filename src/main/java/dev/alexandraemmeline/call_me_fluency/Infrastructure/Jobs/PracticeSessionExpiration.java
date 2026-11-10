@@ -1,15 +1,19 @@
-package dev.alexandraemmeline.call_me_fluency.Infrastructure.Scheduling;
+package dev.alexandraemmeline.call_me_fluency.Infrastructure.Jobs;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Enums.PracticeSessionStatus;
+import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.InvalidPracticeSessionStateException;
 import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.PracticeSessionNotFoundException;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSession.CancelPracticeSessionUseCase;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSession.FindPracticeSessionsByStatusUseCase;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSession.MarkPracticeSessionAsMissedUseCase;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
+@Slf4j
 @Component
 public class PracticeSessionExpiration {
 
@@ -28,9 +32,7 @@ public class PracticeSessionExpiration {
     @Scheduled(fixedDelay = 60000)
     public void expireSessions() {
 
-        LocalDateTime now = LocalDateTime.now()
-                .withSecond(0)
-                .withNano(0);
+        LocalDateTime now = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
 
         findPracticeSessionsByStatusUseCase.execute(PracticeSessionStatus.SCHEDULED)
                 .forEach(session -> {
@@ -41,11 +43,11 @@ public class PracticeSessionExpiration {
                     } catch (PracticeSessionNotFoundException ex) {
 
                     } catch (Exception ex) {
-                        System.out.println("Failed to cancel session. Error: " + ex);
+                        log.error("Failed to cancel session. Error: {}", ex);
                     }
 
                 });
-        
+
 
         findPracticeSessionsByStatusUseCase.execute(PracticeSessionStatus.RINGING)
                 .forEach(session -> {
@@ -54,10 +56,10 @@ public class PracticeSessionExpiration {
                         if (limit.isBefore(now)) {
                             markPracticeSessionAsMissedUseCase.execute(session.getId());
                         }
-                    } catch (PracticeSessionNotFoundException ex) {
-
+                    } catch (InvalidPracticeSessionStateException | PracticeSessionNotFoundException ex) {
+                        log.warn("Session skiped {}", ex.getMessage());
                     } catch (Exception ex) {
-                        System.out.println("Failed to mark session as missesd. Error: " + ex);
+                        log.error("Failed to mark session as missed. Error: {}", ex);
                     }
 
                 });
