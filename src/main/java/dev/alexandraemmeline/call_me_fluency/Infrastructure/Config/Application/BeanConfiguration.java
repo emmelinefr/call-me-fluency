@@ -5,7 +5,6 @@ import dev.alexandraemmeline.call_me_fluency.Core.Managers.PracticeSessionManage
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSchedule.*;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSession.*;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.User.*;
-import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.PracticeSchedule.PracticeScheduleRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -111,8 +110,8 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public FindPracticeSessionsScheduledUseCase findPracticeSessionsScheduledUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
-        return new FindPracticeSessionsScheduledUseCaseImpl(practiceSessionRepositoryGateway);
+    public FindPracticeSessionsByStatusUseCase findPracticeSessionsByStatusUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
+        return new FindPracticeSessionsByStatusUseCaseImpl(practiceSessionRepositoryGateway);
     }
 
     @Bean

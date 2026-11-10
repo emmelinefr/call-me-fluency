@@ -1,6 +1,7 @@
 package dev.alexandraemmeline.call_me_fluency.Core.Gateway;
 
 import dev.alexandraemmeline.call_me_fluency.Core.Domains.PracticeSessionDomain;
+import dev.alexandraemmeline.call_me_fluency.Core.Enums.PracticeSessionStatus;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -16,6 +17,6 @@ public interface PracticeSessionRepositoryGateway {
 
     boolean existsByPracticeScheduleIdAndScheduledAt(Long practiceScheduleId, LocalDateTime scheduledAt);
 
-    Set<PracticeSessionDomain> findScheduleds();
+    Set<PracticeSessionDomain> findByStatus(PracticeSessionStatus status);
 
 }
