@@ -119,4 +119,23 @@ public class PracticeSessionDomain {
 
     }
 
+    //markAsRinging
+    public void markAsRinging() {
+        if (status != PracticeSessionStatus.SCHEDULED) {
+            throw new InvalidPracticeSessionStateException(
+                    "Practice session cannot be marked as ringing."
+            );
+        }
+
+    }
+
+    //markAsMissed
+    public void markAsMissed() {
+        if (status != PracticeSessionStatus.RINGING) {
+            throw new InvalidPracticeSessionStateException(
+                    "Practice session cannot be marked as missed."
+            );
+        }
+    }
+
 }
