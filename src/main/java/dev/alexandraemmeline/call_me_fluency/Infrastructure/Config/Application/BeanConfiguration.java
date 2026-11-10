@@ -115,8 +115,8 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public MarkPracticeSessionAsRingingUseCse markPracticeSessionAsRingingUseCse(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
-        return new MarkPracticeSessionAsRingingUseCseImpl(practiceSessionRepositoryGateway);
+    public MarkPracticeSessionAsRingingUseCase markPracticeSessionAsRingingUseCse(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
+        return new MarkPracticeSessionAsRingingUseCaseImpl(practiceSessionRepositoryGateway);
     }
 
     @Bean

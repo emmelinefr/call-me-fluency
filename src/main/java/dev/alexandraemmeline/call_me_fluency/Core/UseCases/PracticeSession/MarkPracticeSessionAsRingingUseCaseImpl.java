@@ -4,11 +4,11 @@ import dev.alexandraemmeline.call_me_fluency.Core.Domains.PracticeSessionDomain;
 import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.PracticeSessionNotFoundException;
 import dev.alexandraemmeline.call_me_fluency.Core.Gateway.PracticeSessionRepositoryGateway;
 
-public class MarkPracticeSessionAsRingingUseCseImpl implements MarkPracticeSessionAsRingingUseCse {
+public class MarkPracticeSessionAsRingingUseCaseImpl implements MarkPracticeSessionAsRingingUseCase {
 
     private final PracticeSessionRepositoryGateway practiceSessionRepositoryGateway;
 
-    public MarkPracticeSessionAsRingingUseCseImpl(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
+    public MarkPracticeSessionAsRingingUseCaseImpl(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
         this.practiceSessionRepositoryGateway = practiceSessionRepositoryGateway;
     }
 
