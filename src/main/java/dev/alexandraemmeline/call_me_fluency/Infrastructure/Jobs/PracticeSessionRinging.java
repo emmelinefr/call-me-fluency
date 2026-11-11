@@ -32,21 +32,22 @@ public class PracticeSessionRinging {
 
         findPracticeSessionsByStatusUseCase.execute(PracticeSessionStatus.SCHEDULED)
                 .forEach(session -> {
-                    if (!session.getPracticeSchedule().isActive()) {
-                        return;
-                    }
-
-                    if (session.getScheduledAt().isAfter(now)) {
-                        return;
-                    }
-
                     try {
+                        if (!session.getPracticeSchedule().isActive()) {
+                            return;
+                        }
+
+                        if (session.getScheduledAt().isAfter(now)) {
+                            return;
+                        }
+
                         markPracticeSessionAsRingingUseCase.execute(session.getId());
+                        log.info("Session {} is now RINGING.", session.getId());
                         // Phase 2: this is where the notification to the user (WebSocket) comes in
                     } catch (InvalidPracticeSessionStateException | PracticeSessionNotFoundException ex) {
                         log.warn("Session skiped {}", ex.getMessage());
                     } catch (Exception ex) {
-                        log.error("Failed to mark practice session as ringing. Error: {}", ex);
+                        log.error("Failed to mark session {} as ringing", session.getId(), ex);
                     }
                 });
 

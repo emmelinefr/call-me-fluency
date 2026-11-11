@@ -57,9 +57,9 @@ public class PracticeSessionExpiration {
                             markPracticeSessionAsMissedUseCase.execute(session.getId());
                         }
                     } catch (InvalidPracticeSessionStateException | PracticeSessionNotFoundException ex) {
-                        log.warn("Session skiped {}", ex.getMessage());
+                        log.warn("Session {} skipped: {}", session.getId(), ex.getMessage());
                     } catch (Exception ex) {
-                        log.error("Failed to mark session as missed. Error: {}", ex);
+                        log.error("Failed to cancel session {}", session.getId(), ex);
                     }
 
                 });
