@@ -115,6 +115,7 @@ public class PracticeSessionDomain {
             );
         }
 
+
         this.status = PracticeSessionStatus.CANCELED;
 
     }
@@ -127,6 +128,8 @@ public class PracticeSessionDomain {
             );
         }
 
+        this.status = PracticeSessionStatus.RINGING;
+
     }
 
     //markAsMissed
@@ -136,6 +139,8 @@ public class PracticeSessionDomain {
                     "Practice session cannot be marked as missed."
             );
         }
+
+        this.status = PracticeSessionStatus.MISSED;
     }
 
 }

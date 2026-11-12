@@ -42,7 +42,6 @@ public class PracticeSessionRinging {
                         }
 
                         markPracticeSessionAsRingingUseCase.execute(session.getId());
-                        log.info("Session {} is now RINGING.", session.getId());
                         // Phase 2: this is where the notification to the user (WebSocket) comes in
                     } catch (InvalidPracticeSessionStateException | PracticeSessionNotFoundException ex) {
                         log.warn("Session skiped {}", ex.getMessage());

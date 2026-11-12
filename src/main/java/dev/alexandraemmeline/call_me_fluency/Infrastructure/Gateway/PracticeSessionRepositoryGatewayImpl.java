@@ -65,7 +65,7 @@ public class PracticeSessionRepositoryGatewayImpl implements PracticeSessionRepo
     @Override
     public Set<PracticeSessionDomain> findByStatus(PracticeSessionStatus status) {
 
-        return practiceSessionRepository.findByStatus(PracticeSessionStatus.SCHEDULED)
+        return practiceSessionRepository.findByStatus(status)
                 .stream()
                 .map(practiceSessionMapper::toDomain)
                 .collect(Collectors.toSet());
