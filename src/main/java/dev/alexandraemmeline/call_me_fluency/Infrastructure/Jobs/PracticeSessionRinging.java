@@ -1,54 +1,32 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Jobs;
 
-import dev.alexandraemmeline.call_me_fluency.Core.Enums.PracticeSessionStatus;
 import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.InvalidPracticeSessionStateException;
 import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.PracticeSessionNotFoundException;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSession.FindPracticeSessionsByStatusUseCase;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSession.MarkPracticeSessionAsRingingUseCase;
+import dev.alexandraemmeline.call_me_fluency.Core.Managers.PracticeSessionManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 @Slf4j
 @Component
 public class PracticeSessionRinging {
 
-    private final FindPracticeSessionsByStatusUseCase findPracticeSessionsByStatusUseCase;
-    private final MarkPracticeSessionAsRingingUseCase markPracticeSessionAsRingingUseCase;
+    private final PracticeSessionManager practiceSessionManager;
 
-    public PracticeSessionRinging(FindPracticeSessionsByStatusUseCase findPracticeSessionsByStatusUseCase, MarkPracticeSessionAsRingingUseCase markPracticeSessionAsRingingUseCase) {
-        this.findPracticeSessionsByStatusUseCase = findPracticeSessionsByStatusUseCase;
-        this.markPracticeSessionAsRingingUseCase = markPracticeSessionAsRingingUseCase;
+    public PracticeSessionRinging(PracticeSessionManager practiceSessionManager) {
+        this.practiceSessionManager = practiceSessionManager;
     }
-
 
     @Scheduled(fixedDelay = 60000)
     public void ringSessions() {
 
-        LocalDateTime now = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
+        try {
+            practiceSessionManager.ringSessions();
 
-        findPracticeSessionsByStatusUseCase.execute(PracticeSessionStatus.SCHEDULED)
-                .forEach(session -> {
-                    try {
-                        if (!session.getPracticeSchedule().isActive()) {
-                            return;
-                        }
-
-                        if (session.getScheduledAt().isAfter(now)) {
-                            return;
-                        }
-
-                        markPracticeSessionAsRingingUseCase.execute(session.getId());
-                        // Phase 2: this is where the notification to the user (WebSocket) comes in
-                    } catch (InvalidPracticeSessionStateException | PracticeSessionNotFoundException ex) {
-                        log.warn("Session skiped {}", ex.getMessage());
-                    } catch (Exception ex) {
-                        log.error("Failed to mark session {} as ringing", session.getId(), ex);
-                    }
-                });
+        } catch (Exception ex) {
+            log.error("Failed to execute practice session ringing job.", ex);
+        }
 
     }
 

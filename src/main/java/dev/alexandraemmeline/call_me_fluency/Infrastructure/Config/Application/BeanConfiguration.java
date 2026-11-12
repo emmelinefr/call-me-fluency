@@ -126,8 +126,8 @@ public class BeanConfiguration {
 
     //PRACTICE SESSION MANAGER
     @Bean
-    public PracticeSessionManager practiceSessionManager(FindActivePracticeSchedulesUseCase findActivePracticeSchedulesUseCase, CreatePracticeSessionUseCase createPracticeSessionUseCase) {
-        return new PracticeSessionManager(findActivePracticeSchedulesUseCase, createPracticeSessionUseCase);
+    public PracticeSessionManager practiceSessionManager(FindActivePracticeSchedulesUseCase findActivePracticeSchedulesUseCase, CreatePracticeSessionUseCase createPracticeSessionUseCase, FindPracticeSessionsByStatusUseCase findPracticeSessionsByStatusUseCase, MarkPracticeSessionAsRingingUseCase markPracticeSessionAsRingingUseCase, CancelPracticeSessionUseCase cancelPracticeSessionUseCase, MarkPracticeSessionAsMissedUseCase markPracticeSessionAsMissedUseCase) {
+        return new PracticeSessionManager(findActivePracticeSchedulesUseCase, createPracticeSessionUseCase, findPracticeSessionsByStatusUseCase, markPracticeSessionAsRingingUseCase, cancelPracticeSessionUseCase, markPracticeSessionAsMissedUseCase);
     }
 
 }

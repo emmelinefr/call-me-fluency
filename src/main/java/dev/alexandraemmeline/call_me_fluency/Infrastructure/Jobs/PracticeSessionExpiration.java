@@ -1,68 +1,31 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Jobs;
 
-import dev.alexandraemmeline.call_me_fluency.Core.Enums.PracticeSessionStatus;
-import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.InvalidPracticeSessionStateException;
-import dev.alexandraemmeline.call_me_fluency.Core.Exceptions.PracticeSessionNotFoundException;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSession.CancelPracticeSessionUseCase;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSession.FindPracticeSessionsByStatusUseCase;
-import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSession.MarkPracticeSessionAsMissedUseCase;
+import dev.alexandraemmeline.call_me_fluency.Core.Managers.PracticeSessionManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 @Slf4j
 @Component
 public class PracticeSessionExpiration {
 
-    private static final int RING_TIMEOUT_MINUTES = 5;
+    private final PracticeSessionManager practiceSessionManager;
 
-    private final FindPracticeSessionsByStatusUseCase findPracticeSessionsByStatusUseCase;
-    private final CancelPracticeSessionUseCase cancelPracticeSessionUseCase;
-    private final MarkPracticeSessionAsMissedUseCase markPracticeSessionAsMissedUseCase;
-
-    public PracticeSessionExpiration(FindPracticeSessionsByStatusUseCase findPracticeSessionsByStatusUseCase, CancelPracticeSessionUseCase cancelPracticeSessionUseCase, MarkPracticeSessionAsMissedUseCase markPracticeSessionAsMissedUseCase) {
-        this.findPracticeSessionsByStatusUseCase = findPracticeSessionsByStatusUseCase;
-        this.cancelPracticeSessionUseCase = cancelPracticeSessionUseCase;
-        this.markPracticeSessionAsMissedUseCase = markPracticeSessionAsMissedUseCase;
+    public PracticeSessionExpiration(PracticeSessionManager practiceSessionManager) {
+        this.practiceSessionManager = practiceSessionManager;
     }
+
 
     @Scheduled(fixedDelay = 60000)
     public void expireSessions() {
 
-        LocalDateTime now = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
+        try {
+            practiceSessionManager.expireSessions();
 
-        findPracticeSessionsByStatusUseCase.execute(PracticeSessionStatus.SCHEDULED)
-                .forEach(session -> {
-                    try {
-                        if (!session.getPracticeSchedule().isActive()) {
-                            cancelPracticeSessionUseCase.execute(session.getId());
-                        }
-                    } catch (PracticeSessionNotFoundException ex) {
-
-                    } catch (Exception ex) {
-                        log.error("Failed to cancel session. Error: {}", ex);
-                    }
-
-                });
-
-
-        findPracticeSessionsByStatusUseCase.execute(PracticeSessionStatus.RINGING)
-                .forEach(session -> {
-                    try {
-                        LocalDateTime limit = session.getScheduledAt().plusMinutes(RING_TIMEOUT_MINUTES);
-                        if (limit.isBefore(now)) {
-                            markPracticeSessionAsMissedUseCase.execute(session.getId());
-                        }
-                    } catch (InvalidPracticeSessionStateException | PracticeSessionNotFoundException ex) {
-                        log.warn("Session {} skipped: {}", session.getId(), ex.getMessage());
-                    } catch (Exception ex) {
-                        log.error("Failed to cancel session {}", session.getId(), ex);
-                    }
-
-                });
+        } catch (Exception ex) {
+            log.error("Failed to execute practice session expiration job.", ex);
+        }
 
     }
 
