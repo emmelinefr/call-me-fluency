@@ -14,7 +14,6 @@ CREATE TABLE practice_days (
     practice_schedule_id BIGINT NOT NULL,
     day_of_week VARCHAR(20) NOT NULL,
     time TIME NOT NULL,
-    duration INTEGER NOT NULL,
 
     CONSTRAINT fk_practice_days_schedule
         FOREIGN KEY (practice_schedule_id)

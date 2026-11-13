@@ -1,0 +1,22 @@
+package dev.alexandraemmeline.call_me_fluency.Core.Gateway;
+
+import dev.alexandraemmeline.call_me_fluency.Core.Domains.PracticeSessionDomain;
+import dev.alexandraemmeline.call_me_fluency.Core.Enums.PracticeSessionStatus;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.Set;
+
+public interface PracticeSessionRepositoryGateway {
+
+    Optional<PracticeSessionDomain> findById(Long practiceSessionId);
+
+    PracticeSessionDomain save(PracticeSessionDomain practiceSessionDomain);
+
+    Set<PracticeSessionDomain> findByUserId(Long userId);
+
+    boolean existsByPracticeScheduleIdAndScheduledAt(Long practiceScheduleId, LocalDateTime scheduledAt);
+
+    Set<PracticeSessionDomain> findByStatus(PracticeSessionStatus status);
+
+}

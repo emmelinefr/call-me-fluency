@@ -6,8 +6,7 @@ import java.time.LocalTime;
 public record PracticeDayResponse(
 
         DayOfWeek dayOfWeek,
-        LocalTime time,
-        Integer duration
+        LocalTime time
 
 ) {
 }

@@ -150,7 +150,6 @@ public class PracticeScheduleController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @Transactional
     @PatchMapping("/users/{userId}")
     public ResponseEntity<SuccessResponse<PracticeScheduleResponse>> updateUserSchedule(@Valid @PathVariable Long userId, @RequestBody UpdatePracticeScheduleRequest updatePracticeScheduleRequest) {
 
@@ -191,7 +190,6 @@ public class PracticeScheduleController {
 
 
     @PreAuthorize("isAuthenticated()")
-    @Transactional
     @DeleteMapping
     public ResponseEntity<SuccessResponse> deleteMySchedule(Authentication authentication) {
 
@@ -212,9 +210,8 @@ public class PracticeScheduleController {
 
 
     @PreAuthorize("hasRole('ADMIN')")
-    @Transactional
     @DeleteMapping("/users/{userId}")
-    public ResponseEntity<SuccessResponse> deleteUserSchedule(@PathVariable Long userId) {
+    public ResponseEntity<SuccessResponse> deleteScheduleByUserId(@PathVariable Long userId) {
 
         deletePracticeScheduleUseCase.execute(userId);
 

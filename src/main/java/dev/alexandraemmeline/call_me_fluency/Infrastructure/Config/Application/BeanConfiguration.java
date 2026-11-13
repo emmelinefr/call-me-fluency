@@ -1,10 +1,9 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Config.Application;
 
-import dev.alexandraemmeline.call_me_fluency.Core.Gateway.AuthenticationGateway;
-import dev.alexandraemmeline.call_me_fluency.Core.Gateway.PracticeScheduleRepositoryGateway;
-import dev.alexandraemmeline.call_me_fluency.Core.Gateway.TokenProviderGateway;
-import dev.alexandraemmeline.call_me_fluency.Core.Gateway.UserRepositoryGateway;
+import dev.alexandraemmeline.call_me_fluency.Core.Gateway.*;
+import dev.alexandraemmeline.call_me_fluency.Core.Managers.PracticeSessionManager;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSchedule.*;
+import dev.alexandraemmeline.call_me_fluency.Core.UseCases.PracticeSession.*;
 import dev.alexandraemmeline.call_me_fluency.Core.UseCases.User.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -71,4 +70,64 @@ public class BeanConfiguration {
     public DeletePracticeScheduleUseCase deletePracticeScheduleUseCase(PracticeScheduleRepositoryGateway practiceScheduleRepositoryGateway) {
         return new DeletePracticeScheduleUseCaseImpl(practiceScheduleRepositoryGateway);
     }
+
+    @Bean
+    public FindActivePracticeSchedulesUseCase findActivePracticeSchedulesUseCase(PracticeScheduleRepositoryGateway practiceScheduleRepositoryGateway) {
+        return new FindActivePracticeSchedulesUseCaseImpl(practiceScheduleRepositoryGateway);
+    }
+
+
+
+    //PRACTICE SESSION
+    @Bean
+    public CreatePracticeSessionUseCase createPracticeSessionUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway, UserRepositoryGateway userRepositoryGateway, PracticeScheduleRepositoryGateway practiceScheduleRepositoryGateway) {
+        return new CreatePracticeSessionUseCaseImpl(practiceSessionRepositoryGateway, userRepositoryGateway, practiceScheduleRepositoryGateway);
+    }
+
+    @Bean
+    public StartPracticeSessionUseCase startPracticeSessionUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
+        return new StartPracticeSessionUseCaseImpl(practiceSessionRepositoryGateway);
+    }
+
+    @Bean
+    public CancelPracticeSessionUseCase cancelPracticeSessionUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
+        return new CancelPracticeSessionUseCaseImpl(practiceSessionRepositoryGateway);
+    }
+
+    @Bean
+    public FinishPracticeSessionUseCase finishPracticeSessionUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
+        return new FinishPracticeSessionUseCaseImpl(practiceSessionRepositoryGateway);
+    }
+
+    @Bean
+    public FindPracticeSessionByIdUseCase findPracticeSessionUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
+        return new FindPracticeSessionByIdUseCaseImpl(practiceSessionRepositoryGateway);
+    }
+
+    @Bean
+    public ListPracticeSessionsUseCase listPracticeSessionsUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
+        return new ListPracticeSessionsUseCaseImpl(practiceSessionRepositoryGateway);
+    }
+
+    @Bean
+    public FindPracticeSessionsByStatusUseCase findPracticeSessionsByStatusUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
+        return new FindPracticeSessionsByStatusUseCaseImpl(practiceSessionRepositoryGateway);
+    }
+
+    @Bean
+    public MarkPracticeSessionAsRingingUseCase markPracticeSessionAsRingingUseCse(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
+        return new MarkPracticeSessionAsRingingUseCaseImpl(practiceSessionRepositoryGateway);
+    }
+
+    @Bean
+    public MarkPracticeSessionAsMissedUseCase markPracticeSessionAsMissedUseCase(PracticeSessionRepositoryGateway practiceSessionRepositoryGateway) {
+        return new MarkPracticeSessionAsMissedUseCaseImpl(practiceSessionRepositoryGateway);
+    }
+
+    //PRACTICE SESSION MANAGER
+    @Bean
+    public PracticeSessionManager practiceSessionManager(FindActivePracticeSchedulesUseCase findActivePracticeSchedulesUseCase, CreatePracticeSessionUseCase createPracticeSessionUseCase, FindPracticeSessionsByStatusUseCase findPracticeSessionsByStatusUseCase, MarkPracticeSessionAsRingingUseCase markPracticeSessionAsRingingUseCase, CancelPracticeSessionUseCase cancelPracticeSessionUseCase, MarkPracticeSessionAsMissedUseCase markPracticeSessionAsMissedUseCase) {
+        return new PracticeSessionManager(findActivePracticeSchedulesUseCase, createPracticeSessionUseCase, findPracticeSessionsByStatusUseCase, markPracticeSessionAsRingingUseCase, cancelPracticeSessionUseCase, markPracticeSessionAsMissedUseCase);
+    }
+
 }

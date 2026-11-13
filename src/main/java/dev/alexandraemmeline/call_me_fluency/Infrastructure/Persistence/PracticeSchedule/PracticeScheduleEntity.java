@@ -1,18 +1,19 @@
 package dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.PracticeSchedule;
 
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.PracticeSession.PracticeSessionEntity;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.User.UserEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "practice_schedule")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class PracticeScheduleEntity {
 
     @Id
@@ -30,7 +31,7 @@ public class PracticeScheduleEntity {
 
 
     //practice_schedule & practice_day
-    @ElementCollection(fetch = FetchType.LAZY)
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "practice_days",
             joinColumns = @JoinColumn(name = "practice_schedule_id")
@@ -39,5 +40,14 @@ public class PracticeScheduleEntity {
 
     @Column(nullable = false)
     private boolean active;
+
+
+    //practice_schedule & practice_session
+    //@JsonProperties??
+    @OneToMany(
+            mappedBy = "practiceSchedule",
+            fetch = FetchType.LAZY
+    )
+    private Set<PracticeSessionEntity> practiceSessions = new HashSet<>();
 
 }

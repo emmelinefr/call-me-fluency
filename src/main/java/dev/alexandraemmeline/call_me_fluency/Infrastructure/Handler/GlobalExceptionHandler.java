@@ -15,7 +15,7 @@ import java.util.List;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(DomainException.class)
-    public ResponseEntity<ErrorResponse> handleDomainException (DomainException ex) {
+    public ResponseEntity<ErrorResponse> DomainException (DomainException ex) {
 
         ErrorResponse response = new ErrorResponse(
                 false,
@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now()
         );
 
-        return ResponseEntity.badRequest()
+        return ResponseEntity.status(409)
                 .body(response);
     }
 
@@ -53,7 +53,7 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now()
         );
 
-        return ResponseEntity.badRequest()
+        return ResponseEntity.status(404)
                 .body(response);
     }
 
@@ -67,12 +67,12 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now()
         );
 
-        return ResponseEntity.badRequest()
+        return ResponseEntity.status(401)
                 .body(response);
     }
 
     @ExceptionHandler(SamePasswordException.class)
-    public ResponseEntity<ErrorResponse> samePasswordException(InvalidCredentialsException ex) {
+    public ResponseEntity<ErrorResponse> samePasswordException(SamePasswordException ex) {
 
         ErrorResponse response = new ErrorResponse(
                 false,
@@ -127,19 +127,6 @@ public class GlobalExceptionHandler {
                 .body(response);
     }
 
-    @ExceptionHandler(InvalidPracticeDayDurationException.class)
-    public ResponseEntity<ErrorResponse> invalidPracticeDayDurationException(InvalidPracticeDayDurationException ex) {
-
-        ErrorResponse response = new ErrorResponse(
-                false,
-                ex.getMessage(),
-                List.of(ex.getMessage()),
-                LocalDateTime.now()
-        );
-
-        return ResponseEntity.badRequest()
-                .body(response);
-    }
 
     @ExceptionHandler(DuplicatePracticeDayException.class)
     public ResponseEntity<ErrorResponse> duplicatePracticeDayException(DuplicatePracticeDayException ex) {
@@ -156,7 +143,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(PracticeScheduleAlreadyExistsException.class)
-    public ResponseEntity<ErrorResponse> practiceScheduleAlreadyDayException(PracticeScheduleAlreadyExistsException ex) {
+    public ResponseEntity<ErrorResponse> practiceScheduleAlreadyExistsException(PracticeScheduleAlreadyExistsException ex) {
 
         ErrorResponse response = new ErrorResponse(
                 false,
@@ -171,6 +158,35 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(PracticeScheduleNotFoundException.class)
     public ResponseEntity<ErrorResponse> practiceScheduleNotFoundException(PracticeScheduleNotFoundException ex) {
+
+        ErrorResponse response = new ErrorResponse(
+                false,
+                ex.getMessage(),
+                List.of(ex.getMessage()),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.status(404)
+                .body(response);
+    }
+
+
+    @ExceptionHandler(PracticeSessionNotFoundException.class)
+    public ResponseEntity<ErrorResponse> practiceSessionNotFoundException(PracticeSessionNotFoundException ex) {
+
+        ErrorResponse response = new ErrorResponse(
+                false,
+                ex.getMessage(),
+                List.of(ex.getMessage()),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.status(404)
+                .body(response);
+    }
+
+    @ExceptionHandler(PracticeSessionAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> practiceSessionAlreadyExistsException(PracticeSessionAlreadyExistsException ex) {
 
         ErrorResponse response = new ErrorResponse(
                 false,

@@ -3,11 +3,10 @@ package dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.User;
 import dev.alexandraemmeline.call_me_fluency.Core.Enums.UserLevel;
 import dev.alexandraemmeline.call_me_fluency.Core.Enums.UserStatus;
 import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.PracticeSchedule.PracticeScheduleEntity;
+import dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.PracticeSession.PracticeSessionEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -17,7 +16,8 @@ import java.util.Set;
 @Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class UserEntity {
 
     @Id
@@ -59,9 +59,17 @@ public class UserEntity {
     //user & practice_schedule
     @OneToOne(
             mappedBy = "user",
-            cascade = CascadeType.ALL
+            cascade = CascadeType.REMOVE
     )
     private PracticeScheduleEntity practiceScheduleEntity;
+
+
+    //user % practice_session
+    @OneToMany(
+            mappedBy = "user",
+            fetch = FetchType.LAZY
+    )
+    private Set<PracticeSessionEntity> practiceSessions = new HashSet<>();
 
 }
 

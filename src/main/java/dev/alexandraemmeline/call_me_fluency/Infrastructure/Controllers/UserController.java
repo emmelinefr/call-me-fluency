@@ -31,7 +31,6 @@ public class UserController {
 
 
     @PreAuthorize("#deleteUserRequest.email() == authentication.name")
-    @Transactional
     @DeleteMapping("/me")
     public ResponseEntity<SuccessResponse> deleteMe(@RequestBody @Valid DeleteUserRequest deleteUserRequest) {
         deleteUserUseCase.execute(deleteUserRequest.email(), deleteUserRequest.password());
@@ -87,7 +86,6 @@ public class UserController {
     }
 
     @PreAuthorize("#changePasswordRequest.email() == authentication.name")
-    @Transactional
     @PatchMapping("/me/password")
     public ResponseEntity<SuccessResponse<Void>> changeMyPassword(@RequestBody @Valid ChangePasswordRequest changePasswordRequest) {
 
@@ -105,7 +103,6 @@ public class UserController {
 
 
     @PreAuthorize("hasRole('ADMIN')")
-    @Transactional
     @PatchMapping("{id}/role")
     public ResponseEntity<SuccessResponse> updateRole(@PathVariable Long id) {
 

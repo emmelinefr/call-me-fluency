@@ -3,15 +3,15 @@ package dev.alexandraemmeline.call_me_fluency.Infrastructure.Persistence.Practic
 
 import dev.alexandraemmeline.call_me_fluency.Core.Enums.DayOfWeek;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.time.LocalTime;
 
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class PracticeDayEntity {
 
     @Enumerated(EnumType.STRING)
@@ -21,7 +21,5 @@ public class PracticeDayEntity {
     @Column(nullable = false)
     private LocalTime time;
 
-    @Column(nullable = false)
-    private int duration;
 
 }
