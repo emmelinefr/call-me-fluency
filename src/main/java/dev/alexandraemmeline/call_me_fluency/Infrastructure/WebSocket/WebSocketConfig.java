@@ -10,14 +10,16 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 public class WebSocketConfig implements WebSocketConfigurer {
 
     private final SessionWebSocketHandler sessionWebSocketHandler;
+    private final JwtHandshakeInterceptor jwtHandshakeInterceptor;
 
-    public WebSocketConfig(SessionWebSocketHandler sessionWebSocketHandler) {
+    public WebSocketConfig(SessionWebSocketHandler sessionWebSocketHandler, JwtHandshakeInterceptor jwtHandshakeInterceptor) {
         this.sessionWebSocketHandler = sessionWebSocketHandler;
+        this.jwtHandshakeInterceptor = jwtHandshakeInterceptor;
     }
-
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(sessionWebSocketHandler, "/ws/sessions");
+        registry.addHandler(sessionWebSocketHandler, "/ws/sessions")
+                .addInterceptors(jwtHandshakeInterceptor);
     }
 }
