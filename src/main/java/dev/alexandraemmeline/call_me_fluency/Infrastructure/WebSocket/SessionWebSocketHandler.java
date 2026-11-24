@@ -11,9 +11,21 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 @Slf4j
 public class SessionWebSocketHandler extends TextWebSocketHandler {
 
+    private final WebSocketSessionRegistry webSocketSessionRegistry;
+
+    public SessionWebSocketHandler(WebSocketSessionRegistry webSocketSessionRegistry) {
+        this.webSocketSessionRegistry = webSocketSessionRegistry;
+    }
+
+
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        log.info("WebSocket connection established. Session ID: {}", session.getId());
+
+        String email = (String) session.getAttributes().get("email");
+
+        webSocketSessionRegistry.addSession(email, session);
+
+        log.info("WebSocket connection established for user {}. Session ID: {}", email, session.getId());
     }
 
     @Override
@@ -23,7 +35,12 @@ public class SessionWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        log.info("WebSocket connection closed. Session ID: {}", session.getId());
+
+        String email = (String) session.getAttributes().get("email");
+
+        webSocketSessionRegistry.removeSession(email, session);
+
+        log.info("WebSocket connection closed for user {}. Session ID: {}", email, session.getId());
     }
 
 
